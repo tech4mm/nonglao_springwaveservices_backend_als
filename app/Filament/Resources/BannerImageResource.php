@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BannerResource\Pages;
-use App\Filament\Resources\BannerResource\RelationManagers;
-use App\Models\Banner;
+use App\Filament\Resources\BannerImageResource\Pages;
+use App\Filament\Resources\BannerImageResource\RelationManagers;
+use App\Models\BannerImage;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,25 +12,28 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\TextColumn;
 
-
-class BannerResource extends Resource
+class BannerImageResource extends Resource
 {
-    protected static ?string $model = Banner::class;
+    protected static ?string $model = BannerImage::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    //protected static string $slug = 'banners';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('photo')
-                ->label('Photo URL')
+                //
+                TextInput::make('name')->required(),
+            FileUpload::make('image')
+                ->image() // Specify that the field should handle images
+                ->disk('public') // Store the image on the public disk (you can customize this)
+                ->directory('banner_images') // Save images in the `banner_images` folder
                 ->required(),
-            // You can add more fields as needed
-        ]);
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -38,10 +41,8 @@ class BannerResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('id')->sortable(),
-            Tables\Columns\TextColumn::make('photo')->searchable(),
-            Tables\Columns\TextColumn::make('created_at')->date(),
-            Tables\Columns\TextColumn::make('updated_at')->date(),
+                TextColumn::make('name')->sortable()->searchable(),
+            TextColumn::make('image')->label('Image')->limit(50),
             ])
             ->filters([
                 //
@@ -66,9 +67,9 @@ class BannerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBanners::route('/'),
-            'create' => Pages\CreateBanner::route('/create'),
-            'edit' => Pages\EditBanner::route('/{record}/edit'),
+            'index' => Pages\ListBannerImages::route('/'),
+            'create' => Pages\CreateBannerImage::route('/create'),
+            'edit' => Pages\EditBannerImage::route('/{record}/edit'),
         ];
     }
 }
