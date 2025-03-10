@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 
 class BannerImageResource extends Resource
 {
@@ -42,13 +43,15 @@ class BannerImageResource extends Resource
             ->columns([
                 //
                 TextColumn::make('name')->sortable()->searchable(),
-            TextColumn::make('image')->label('Image')->limit(50),
+            
+            ImageColumn::make('image')->label('Image')->disk('public')->size(50),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
