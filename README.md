@@ -1,66 +1,76 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://your-project-url.com" target="_blank"><img src="https://your-logo-url.com/logo.png" width="400" alt="SpringWaveServices Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<a href="https://github.com/Tech4MMCompany/SpringWaveServices/actions"><img src="https://github.com/Tech4MMCompany/SpringWaveServices/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/tech4mm/springwaveservices"><img src="https://img.shields.io/packagist/dt/tech4mm/springwaveservices" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/tech4mm/springwaveservices"><img src="https://img.shields.io/packagist/v/tech4mm/springwaveservices" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/tech4mm/springwaveservices"><img src="https://img.shields.io/packagist/l/tech4mm/springwaveservices" alt="License"></a>
 </p>
 
-## About Laravel
+## About SpringWaveServices
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**SpringWaveServices** is an admin dashboard designed for managing various aspects of passport, visa, and legal services for businesses. Developed by **Tech4MM Company Limited**, this system is crafted with ease-of-use and efficiency in mind for professionals in the legal, visa, and immigration services industry.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+With **SpringWaveServices**, users can manage various service applications, track cases, and access reports, all in one place. Built using Laravel and integrated with Filament, the dashboard offers a simple and intuitive interface for both users and administrators.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Features
 
-## Learning Laravel
+- **Admin Dashboard**: Manage visa, passport, and legal service operations.
+- **Case Management**: Track and manage service applications and cases.
+- **User Management**: Manage user roles and permissions.
+- **Reporting**: Generate and view detailed reports of applications and cases.
+- **Filament Integration**: Admin UI built with Filament for a modern, easy-to-use experience.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+To get started with **SpringWaveServices**, clone this repository and install the necessary dependencies:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone https://github.com/Tech4MMCompany/SpringWaveServices.git
+cd SpringWaveServices
+composer install
 
-## Laravel Sponsors
+Next, set up your .env file:
+cp .env.example .env
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Generate an application key:
+php artisan key:generate
+Run the migrations:
+php artisan migrate
 
-### Premium Partners
+Configuration
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Before you start using the application, make sure to configure the necessary environment variables in the .env file.
 
-## Contributing
+Example:
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=springwaveservices
+DB_USERNAME=root
+DB_PASSWORD=
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Development
 
-## Code of Conduct
+SpringWaveServices is actively developed by Tech4MM Company Limited, and we welcome contributions from the open-source community. If you’d like to contribute to the project, please fork the repository and submit a pull request.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Contact
+	•	Lead Developer: mrxcode.dev@gmail.com
+	•	GitHub Username: mrxc0de
+	•	Company: Tech4MM Company Limited
+	•	Website: tech4mm.com
 
-## Security Vulnerabilities
+Acknowledgements
+	•	Laravel: A PHP framework for web artisans.
+	•	Filament: A robust admin panel for Laravel.
+	•	Tech4MM: For the ongoing development and support.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    Thank you for using SpringWaveServices! We hope it makes managing your legal, visa, and passport services easier and more efficient.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This software is private and currently under development as part of a contract agreement. It is owned by **Tech4MM Company Limited**. The source code and intellectual property rights of this project will be transferred to **SpringWaveServices Company Limited** upon the creation of 20+ applications and dashboards.
+
+All details related to this software are confidential and regulated by Myanmar government laws.
+
+Unauthorized use, distribution, or modification of this software is prohibited.
