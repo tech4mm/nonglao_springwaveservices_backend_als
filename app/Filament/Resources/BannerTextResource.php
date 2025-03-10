@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
 
 class BannerTextResource extends Resource
 {
@@ -24,9 +26,10 @@ class BannerTextResource extends Resource
         return $form
             ->schema([
                 //
-                Forms\Components\TextInput::make('banner_text')
-                ->label('Banner Text')
-                ->required(),
+                Textarea::make('e_body')->label('English Body')->required(),
+            Textarea::make('m_body')->label('Myanmar Body')->required(),
+            Textarea::make('t_body')->label('Thai Body')->required(),
+            Textarea::make('s_body')->label('Sundanese Body')->required(),
             ]);
     }
 
@@ -35,10 +38,10 @@ class BannerTextResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('id')->sortable(),
-            Tables\Columns\TextColumn::make('banner_text'),
-            Tables\Columns\TextColumn::make('created_at')->date(),
-            Tables\Columns\TextColumn::make('updated_at')->date(),
+                TextColumn::make('e_body')->limit(50),
+            TextColumn::make('m_body')->limit(50),
+            TextColumn::make('t_body')->limit(50),
+            TextColumn::make('s_body')->limit(50),
             ])
             ->filters([
                 //

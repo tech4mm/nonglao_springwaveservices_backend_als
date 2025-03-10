@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class BannerText extends Model
 {
     //
-    use HasFactory;
-    protected $fillable = ['banner_text'];
+        use HasFactory;
+    protected $fillable = [
+        'e_body',
+        'm_body',
+        't_body',
+        's_body',
+    ];
 }
