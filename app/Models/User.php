@@ -29,7 +29,7 @@ class User extends Authenticatable implements FilamentUser
     // my modi code
     public function canAccessPanel(Panel $panel): bool
     {
-        return str_ends_with($this->email, '@springwaveservices.com') && $this->hasVerifiedEmail();
+        return str_ends_with($this->email, '@gmail.com') && $this->hasVerifiedEmail();
     }
 
     // end my code
