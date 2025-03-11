@@ -49,6 +49,10 @@ class UserResource extends Resource
                TextInput::make('name')
                 ->required()
                 ->label('Name'),
+            TextInput::make('phone')
+                ->required()
+                ->unique(ignoreRecord: true)
+                ->label('Phone'),
             TextInput::make('email')
                 ->required()
                 ->email()
@@ -69,7 +73,8 @@ class UserResource extends Resource
                 //
                 TextColumn::make('id')->sortable()->searchable(),
             TextColumn::make('name')->sortable()->searchable(),
-            TextColumn::make('email')->sortable()->searchable(),
+            TextColumn::make('phone')->sortable()->searchable(),
+            // TextColumn::make('email')->sortable()->searchable(),
             TextColumn::make('created_at')->sortable(),
             TextColumn::make('updated_at')->sortable(),
             ])

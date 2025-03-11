@@ -8,9 +8,14 @@ use App\Http\Controllers\Api\BannerImageController;
 use App\Http\Controllers\Api\BannerTextController;
 use App\Http\Controllers\Api\CompanyDetailsController;
 use App\Http\Controllers\Api\ContactUsController;
+use App\Http\Controllers\Api\MarriageCertificateRequirementController;
+use App\Http\Controllers\Api\PassportExtensionRequirementController;
 use App\Http\Controllers\Api\PrivacyPolicyController;
 use App\Http\Controllers\Api\SocialController;
 use App\Http\Controllers\Api\TermsConditionController;
+use App\Http\Controllers\Api\WorkPermitRequirementController;
+use App\Http\Controllers\NinetyDayRequirementController;
+use App\Http\Controllers\VisaExtensionRequirementController;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post("login", [ApiController::class, "login"]);
@@ -22,6 +27,11 @@ Route::get('/privacy_policy', [PrivacyPolicyController::class, 'index']);
 Route::get('/company_details', [CompanyDetailsController::class, 'index']);
 Route::get('/contact_us', [ContactUsController::class, 'index']);
 Route::get('/social', [SocialController::class, 'index']);
+Route::get('/work_permit_requirements', [WorkPermitRequirementController::class, 'index']);
+Route::get('/visa_extension_requirements', [VisaExtensionRequirementController::class, 'index']);
+Route::get('/passport_extension_requirements', [PassportExtensionRequirementController::class, 'index']);
+Route::get('/marriage_certificate_requirements', [MarriageCertificateRequirementController::class, 'index']);
+Route::get('/ninety_day_requirements', [NinetyDayRequirementController::class, 'index']);
 
 Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get("profile", [ApiController::class, "profile"]);

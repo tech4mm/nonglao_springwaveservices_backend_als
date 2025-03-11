@@ -11,9 +11,12 @@ class ApiController extends Controller
 {
     public function register(Request $request){
         $request-> validate([
-            'name'=> 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'password'=> 'required|confirmed',
+            // 'name'=> 'required|string',
+            // 'email' => 'required|email|unique:users,email',
+            // 'password'=> 'required|confirmed',
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|unique:users,phone',
+            'password' => 'required|string|min:6',
         ]);
         User::create($request->all());
         return response()->json([
@@ -25,12 +28,14 @@ class ApiController extends Controller
 
     public function login(Request $request){
         $request -> validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            // 'email' => 'required|email',
+            // 'password' => 'required',
+            'phone' => 'required|string',
+            'password' => 'required|string',
         ]);
 
         // check email from db
-        $user = User::where('email', $request-> email) -> first();
+        $user = User::where('phone', $request->phone) -> first();
 
         if(!empty($user)){
             // password check
@@ -50,7 +55,7 @@ class ApiController extends Controller
         }else{
             return response()->json([
                 'status' => false,
-                'message' => 'Eamil invalid',
+                'message' => 'Phone invalid',
             ]);
         }
     }
