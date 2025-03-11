@@ -21,7 +21,25 @@ class NinetyDayRequirementResource extends Resource
 {
     protected static ?string $model = NinetyDayRequirement::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+     public static function getNavigationLabel(): string
+    {
+        return 'Ninety Day Requirements'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Requirements'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 5; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-calendar-days'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

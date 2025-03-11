@@ -21,7 +21,25 @@ class WorkPermitRequirementResource extends Resource
 {
     protected static ?string $model = WorkPermitRequirement::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Work Permit Requirements'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Requirements'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-briefcase'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

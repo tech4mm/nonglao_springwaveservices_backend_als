@@ -27,9 +27,21 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->colors([
-                'primary' => Color::Amber,
+            // ->colors([
+            //     'primary' => Color::Amber,
+            // ])
+
+            // my code
+
+                ->brandLogo(asset('storage/images/logo.jpg')) // Custom Logo
+                ->brandLogoHeight('50px') // Adjust height
+                //->favicon(asset('images/logo.jpg')) // Custom Favicon
+                ->colors([
+                'primary' => '#FA03CD', // Custom primary color
             ])
+
+            // end my code
+
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

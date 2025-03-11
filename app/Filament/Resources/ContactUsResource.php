@@ -19,7 +19,25 @@ class ContactUsResource extends Resource
 {
     protected static ?string $model = ContactUs::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Contact US'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Admin Panel'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 5; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-phone'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

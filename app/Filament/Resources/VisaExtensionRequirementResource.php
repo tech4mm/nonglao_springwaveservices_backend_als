@@ -21,7 +21,25 @@ class VisaExtensionRequirementResource extends Resource
 {
     protected static ?string $model = VisaExtensionRequirement::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+     public static function getNavigationLabel(): string
+    {
+        return 'Visa Extension Requirements'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Requirements'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 2; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-document-check'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

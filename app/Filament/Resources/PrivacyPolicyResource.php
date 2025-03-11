@@ -19,7 +19,25 @@ class PrivacyPolicyResource extends Resource
 {
     protected static ?string $model = PrivacyPolicy::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Privacy Policy'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Admin Panel'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 3; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-eye-slash'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

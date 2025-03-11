@@ -1,11 +1,11 @@
-<p align="center"><a href="https://your-project-url.com" target="_blank"><img src="https://your-logo-url.com/logo.png" width="400" alt="SpringWaveServices Logo"></a></p>
+<!-- <p align="center"><a href="https://your-project-url.com" target="_blank"><img src="https://your-logo-url.com/logo.png" width="400" alt="SpringWaveServices Logo"></a></p>
 
 <p align="center">
 <a href="https://github.com/Tech4MMCompany/SpringWaveServices/actions"><img src="https://github.com/Tech4MMCompany/SpringWaveServices/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/tech4mm/springwaveservices"><img src="https://img.shields.io/packagist/dt/tech4mm/springwaveservices" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/tech4mm/springwaveservices"><img src="https://img.shields.io/packagist/v/tech4mm/springwaveservices" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/tech4mm/springwaveservices"><img src="https://img.shields.io/packagist/l/tech4mm/springwaveservices" alt="License"></a>
-</p>
+</p> -->
 
 ## About SpringWaveServices
 

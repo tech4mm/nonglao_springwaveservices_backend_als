@@ -19,7 +19,25 @@ class SocialResource extends Resource
 {
     protected static ?string $model = Social::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Social Links'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Admin Panel'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 6; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-globe-alt'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {
