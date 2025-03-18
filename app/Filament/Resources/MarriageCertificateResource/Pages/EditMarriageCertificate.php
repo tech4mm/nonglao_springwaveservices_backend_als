@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Filament\Resources\MarriageCertificateResource\Pages;
+
+use App\Filament\Resources\MarriageCertificateResource;
+use Filament\Actions;
+use Filament\Resources\Pages\EditRecord;
+
+class EditMarriageCertificate extends EditRecord
+{
+    protected static string $resource = MarriageCertificateResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\DeleteAction::make(),
+        ];
+    }
+}
