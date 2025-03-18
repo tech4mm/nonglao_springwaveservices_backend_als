@@ -42,11 +42,16 @@ class WorkerInfoResource extends Resource
         return $form
             ->schema([
                 //
-                Forms\Components\TextInput::make('user_id')->required(),
+                Forms\Components\Select::make('user_id')
+                ->label('User')
+                ->relationship('user', 'name')
+                ->searchable()
+                ->preload()
+                ->required(),
                 Forms\Components\TextInput::make('passport_no')->required(),
-                Forms\Components\DatePicker::make('date_of_issue'),
-                Forms\Components\TextInput::make('place_of_issue'),
-                Forms\Components\TextInput::make('company_name'),
+                Forms\Components\DatePicker::make('date_of_issue')->required(),
+                Forms\Components\TextInput::make('place_of_issue')->required(),
+                Forms\Components\TextInput::make('company_name')->required(),
             ]);
     }
 

@@ -42,8 +42,11 @@ class VisaDetailResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
+                ->label('User')
+                ->relationship('user', 'name')
+                ->searchable()
+                ->preload()
+                ->required(),
 
                 Forms\Components\FileUpload::make('photo')
     ->disk('public')

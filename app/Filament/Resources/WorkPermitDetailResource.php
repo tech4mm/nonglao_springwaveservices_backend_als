@@ -42,8 +42,11 @@ class WorkPermitDetailResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name') // Assuming a relationship with User model
-                    ->required(),
+                ->label('User')
+                ->relationship('user', 'name')
+                ->searchable()
+                ->preload()
+                ->required(),
 
                 Forms\Components\FileUpload::make('photo')
     ->disk('public') // Ensure it's stored properly
@@ -54,7 +57,13 @@ class WorkPermitDetailResource extends Resource
 
                 Forms\Components\TextInput::make('name'),
 
-                Forms\Components\TextInput::make('gender'),
+                Forms\Components\Select::make('gender')
+                    ->options([
+                        'male' => 'Male',
+                        'female' => 'Female',
+                        'other' => 'Other',
+                    ])
+                    ->required(),
 
                 Forms\Components\TextInput::make('passport_number'),
 
