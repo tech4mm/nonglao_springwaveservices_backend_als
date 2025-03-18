@@ -17,7 +17,25 @@ class PassportDetailResource extends Resource
 {
     protected static ?string $model = PassportDetail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Passport Information'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Info Panel'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 2; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-paper-clip'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

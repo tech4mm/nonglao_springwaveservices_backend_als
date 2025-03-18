@@ -17,7 +17,25 @@ class NinetyDayInfoResource extends Resource
 {
     protected static ?string $model = NinetyDayInfo::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return '90 Days Information'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Info Panel'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 5; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-calendar-days'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

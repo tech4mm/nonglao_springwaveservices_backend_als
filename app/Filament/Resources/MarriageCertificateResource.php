@@ -17,7 +17,25 @@ class MarriageCertificateResource extends Resource
 {
     protected static ?string $model = MarriageCertificate::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+   public static function getNavigationLabel(): string
+    {
+        return 'Marriage Certificate'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Info Panel'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 6; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-sparkles'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

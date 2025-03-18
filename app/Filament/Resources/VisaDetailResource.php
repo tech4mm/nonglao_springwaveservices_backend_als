@@ -17,7 +17,25 @@ class VisaDetailResource extends Resource
 {
     protected static ?string $model = VisaDetail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Visa Information'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Info Panel'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 3; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-document-check'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

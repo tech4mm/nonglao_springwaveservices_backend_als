@@ -17,7 +17,25 @@ class WorkPermitDetailResource extends Resource
 {
     protected static ?string $model = WorkPermitDetail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Worker Permit Information'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Info Panel'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 4; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-briefcase'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {
