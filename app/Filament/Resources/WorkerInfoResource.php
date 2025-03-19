@@ -52,6 +52,21 @@ class WorkerInfoResource extends Resource
                 Forms\Components\DatePicker::make('date_of_issue')->required(),
                 Forms\Components\TextInput::make('place_of_issue')->required(),
                 Forms\Components\TextInput::make('company_name')->required(),
+                Forms\Components\TextInput::make('thai_phone_no')->label('Thai Phone No')->nullable(),
+                Forms\Components\TextInput::make('myan_phone_no')->label('Myanmar Phone No')->nullable(),
+                Forms\Components\Textarea::make('thai_address')->label('Thai Address')->nullable(),
+                Forms\Components\Textarea::make('myan_address')->label('Myanmar Address')->nullable(),
+                Forms\Components\Textarea::make('work_place_address')->label('Workplace Address')->nullable(),
+                Forms\Components\TextInput::make('other_name')->label('Other Name')->nullable(),
+Forms\Components\Select::make('gender')
+    ->label('Gender')
+    ->options([
+        'male' => 'Male',
+        'female' => 'Female',
+        'other' => 'Other',
+    ])
+    ->nullable(),
+Forms\Components\DatePicker::make('date_of_birth')->label('Date of Birth')->nullable(),
             ]);
     }
 

@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\TermsConditionController;
 use App\Http\Controllers\Api\WorkPermitRequirementController;
 use App\Http\Controllers\NinetyDayRequirementController;
 use App\Http\Controllers\VisaExtensionRequirementController;
+use App\Http\Controllers\Api\WorkerInfoController;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post("login", [ApiController::class, "login"]);
@@ -36,6 +37,7 @@ Route::get('/ninety_day_requirements', [NinetyDayRequirementController::class, '
 Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get("profile", [ApiController::class, "profile"]);
     Route::get("logout", [ApiController::class, "logout"]);
+    Route::get("worker_info", [WorkerInfoController::class, "getWorkerInfo"]);
 });
 // Route::get('/user', function (Request $request) {
 //     return $request->user();

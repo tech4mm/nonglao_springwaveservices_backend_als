@@ -20,13 +20,19 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var list<string>
      */
+    // protected $fillable = [
+    //     'name',
+    //     'phone',
+    //     'email',
+    //     'password',
+    // ];
     protected $fillable = [
         'name',
         'phone',
         'email',
         'password',
+        'user_picture'
     ];
-
 
     // my modi code
     public function canAccessPanel(Panel $panel): bool
@@ -56,5 +62,10 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function workerInfo()
+    {
+        return $this->hasOne(WorkerInfo::class);
     }
 }

@@ -46,9 +46,10 @@ class UserResource extends Resource
         return $form
             ->schema([
                 //
-               TextInput::make('name')
+            TextInput::make('name')
                 ->required()
                 ->label('Name'),
+            Forms\Components\FileUpload::make('user_picture')->label('User Picture')->nullable(),
             TextInput::make('phone')
                 ->required()
                 ->unique(ignoreRecord: true)
