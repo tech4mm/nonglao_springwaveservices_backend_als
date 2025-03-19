@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\TermsConditionController;
 use App\Http\Controllers\Api\WorkPermitRequirementController;
 use App\Http\Controllers\NinetyDayRequirementController;
 use App\Http\Controllers\VisaExtensionRequirementController;
+use App\Http\Controllers\Api\NinetyDayDetailController;
 use App\Http\Controllers\Api\VisaDetailController;
 use App\Http\Controllers\Api\WorkerInfoController;
 use App\Http\Controllers\Api\PassportDetailController;
@@ -44,6 +45,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get('/passport_info', [PassportDetailController::class, 'show']);
     Route::get('/visa_info', [VisaDetailController::class, 'getVisaInfo']);
     Route::get('/work_permit_info', [WorkPermitDetailController::class, 'getWorkPermitInfo']);
+    Route::get('/ninety_day_info', [NinetyDayDetailController::class, 'getNinetyDayInfo']);
 });
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
