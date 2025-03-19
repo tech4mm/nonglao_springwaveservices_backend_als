@@ -48,6 +48,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get('/work_permit_info', [WorkPermitDetailController::class, 'getWorkPermitInfo']);
     Route::get('/ninety_day_info', [NinetyDayDetailController::class, 'getNinetyDayInfo']);
     Route::get('/marriage_info', [MarriageCertificateController::class, 'getMarriageCertificateInfo']);
+    Route::post('/update_profile', [ApiController::class, 'update_profile']);
 });
 // Route::get('/user', function (Request $request) {
 //     return $request->user();

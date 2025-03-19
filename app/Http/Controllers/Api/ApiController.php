@@ -11,9 +11,6 @@ class ApiController extends Controller
 {
     public function register(Request $request){
         $request-> validate([
-            // 'name'=> 'required|string',
-            // 'email' => 'required|email|unique:users,email',
-            // 'password'=> 'required|confirmed',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|unique:users,phone',
             'password' => 'required|string|min:6',
@@ -28,8 +25,6 @@ class ApiController extends Controller
 
     public function login(Request $request){
         $request -> validate([
-            // 'email' => 'required|email',
-            // 'password' => 'required',
             'phone' => 'required|string',
             'password' => 'required|string',
         ]);
@@ -61,11 +56,40 @@ class ApiController extends Controller
     }
 
     public function profile(){
-        $userdata = auth() -> user();
+        $userdata = auth()->user();
         return response() -> json([
             'status' => true,
             'message' => 'User data',
             'data' =>  $userdata,
+        ]);
+    }
+
+    public function update_profile(Request $request){
+        $user = auth()->user();
+
+        $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'password' => 'sometimes|string|min:6',
+            'profile_pic' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        if ($request->hasFile('profile_pic')) {
+            $profilePicPath = $request->file('profile_pic')->store('profile_pics', 'public');
+            $user->profile_pic = $profilePicPath;
+        }
+
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Profile updated successfully',
+            'data' => $user,
         ]);
     }
 
