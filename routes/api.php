@@ -19,6 +19,7 @@ use App\Http\Controllers\VisaExtensionRequirementController;
 use App\Http\Controllers\Api\VisaDetailController;
 use App\Http\Controllers\Api\WorkerInfoController;
 use App\Http\Controllers\Api\PassportDetailController;
+use App\Http\Controllers\Api\WorkPermitDetailController;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post("login", [ApiController::class, "login"]);
@@ -42,6 +43,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get("worker_info", [WorkerInfoController::class, "getWorkerInfo"]);
     Route::get('/passport_info', [PassportDetailController::class, 'show']);
     Route::get('/visa_info', [VisaDetailController::class, 'getVisaInfo']);
+    Route::get('/work_permit_info', [WorkPermitDetailController::class, 'getWorkPermitInfo']);
 });
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
