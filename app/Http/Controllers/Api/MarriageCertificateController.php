@@ -20,7 +20,7 @@ class MarriageCertificateController extends Controller
         $marriageCertificate = MarriageCertificate::where('user_id', $user->id)->first();
 
         if (!$marriageCertificate) {
-            return response()->json(['message' => 'Ninety Day Info not found'], 404);
+            return response()->json(['message' => 'Marriage Certificate not found'], 404);
         }
 
         return response()->json($marriageCertificate);
