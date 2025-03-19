@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\VisaDetailController;
 use App\Http\Controllers\Api\WorkerInfoController;
 use App\Http\Controllers\Api\PassportDetailController;
 use App\Http\Controllers\Api\WorkPermitDetailController;
+use App\Http\Controllers\Api\MarriageCertificateController;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post("login", [ApiController::class, "login"]);
@@ -46,6 +47,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get('/visa_info', [VisaDetailController::class, 'getVisaInfo']);
     Route::get('/work_permit_info', [WorkPermitDetailController::class, 'getWorkPermitInfo']);
     Route::get('/ninety_day_info', [NinetyDayDetailController::class, 'getNinetyDayInfo']);
+    Route::get('/marriage_info', [MarriageCertificateController::class, 'getMarriageCertificateInfo']);
 });
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
