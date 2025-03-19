@@ -49,20 +49,25 @@ class VisaDetailResource extends Resource
                 ->required(),
 
                 Forms\Components\FileUpload::make('photo')
-    ->disk('public')
-    ->directory('uploads/photos')
-    ->preserveFilenames()
-    ->image()
-    ->storeFileNamesIn('photo') // Ensures JSON format
-    ->required(),
+                ->disk('public')
+                ->directory('uploads/photos')
+                ->preserveFilenames()
+                ->image()
+                ->storeFileNamesIn('photo') // Ensures JSON format
+                ->required(),
 
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
 
-                Forms\Components\TextInput::make('gender')
-                    ->required()
-                    ->maxLength(50),
+                Forms\Components\Select::make('gender')
+                    ->label('Gender')
+                    ->options([
+                        'male' => 'Male',
+                        'female' => 'Female',
+                        'other' => 'Other',
+                    ])
+                    ->required(),
 
                 Forms\Components\TextInput::make('passport_number')
                     ->required()
