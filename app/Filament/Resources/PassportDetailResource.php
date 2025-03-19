@@ -69,9 +69,14 @@ class PassportDetailResource extends Resource
                 ->required()
                 ->maxLength(100),
 
-            Forms\Components\TextInput::make('gender')
-                ->required()
-                ->maxLength(50),
+            Forms\Components\Select::make('gender')
+                ->label('Gender')
+                ->options([
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                    'Other' => 'Other',
+                ])
+                ->required(),
 
             Forms\Components\DatePicker::make('date_of_birth')
                 ->required(),
