@@ -93,6 +93,39 @@ class ApiController extends Controller
         ]);
     }
 
+    // forgot password
+    public function forgot_password(Request $request)
+{
+    $request->validate([
+        'phone' => 'required|string',
+    ]);
+
+    $user = User::where('phone', $request->phone)->first();
+
+    if (!$user) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Wrong number, user not found',
+        ], 404);
+    }
+
+    // Generate OTP (6-digit random number)
+    $otp = rand(100000, 999999);
+
+    // Here, you should integrate your SMS provider to send the OTP
+    // Example: SmsService::send($request->phone, "Your OTP is: $otp");
+
+    // Save OTP to the user table (optional, depending on your implementation)
+    $user->otp_code = $otp;
+    $user->save();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'OTP sent successfully',
+        'otp' => $otp, // Remove this in production for security reasons
+    ]);
+}
+
     public function logout(){
         auth() -> user() -> tokens() -> delete();
         return response() -> json([
