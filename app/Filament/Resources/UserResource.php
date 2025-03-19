@@ -60,7 +60,6 @@ class UserResource extends Resource
                 ->unique(ignoreRecord: true)
                 ->label('Email'),
             TextInput::make('password')
-                ->required()
                 ->password() // Use password method here
                 ->label('Password')
                 ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
