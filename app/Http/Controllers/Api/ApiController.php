@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Composer\Autoload\ClassLoader;
 
-require_once('vendor/autoload.php');
+// require_once('vendor/autoload.php');
 
 class ApiController extends Controller
 {
