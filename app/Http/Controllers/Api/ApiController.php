@@ -70,27 +70,17 @@ class ApiController extends Controller
 
         // check otp done
         if($response->getStatusCode() == 200){
-            User::create([
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'password' => Hash::make($request->password),
-            ]);
-            return response()->json([
-                'status' => true,
-                'message' => 'User register successfully.'
-            ]);
+            User::create($request->all());
+        return response()->json([
+            'status' => true,
+            'message' => 'User register successfully.'
+        ]);
         }else{
             return response()->json([
                 'status' => false,
                 'message' => 'OTP invalid',
             ]);
         }
-
-        // User::create($request->all());
-        // return response()->json([
-        //     'status' => true,
-        //     'message' => 'User register successfully.'
-        // ]);
     }
 
     // login
