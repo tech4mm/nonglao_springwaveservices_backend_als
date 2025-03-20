@@ -156,38 +156,107 @@ class ApiController extends Controller
         ]);
     }
 
-    // forgot password
-    public function forgot_password(Request $request)
-{
-    $request->validate([
-        'phone' => 'required|string',
-    ]);
 
-    $user = User::where('phone', $request->phone)->first();
+    // otp_forgot_password
+    public function otp_forgot_password(Request $request){
+        $request->validate([
+            'phone' => 'required|string',
+        ]);
 
-    if (!$user) {
-        return response()->json([
-            'status' => false,
-            'message' => 'Wrong number, user not found',
-        ], 404);
+        $user = User::where('phone', $request->phone)->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Wrong number, user not found',
+            ], 404);
+        }
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', 'https://otp.thaibulksms.com/v2/otp/request', [
+        'form_params' => [
+            'key' => '1825361649636880',
+            'secret' => 'd4ce6d0f1a3a4f43cb5b6c2aea146084',
+            'msisdn' => $request->phone
+        ],
+        'headers' => [
+            'accept' => 'application/json',
+            'content-type' => 'application/x-www-form-urlencoded',
+        ],
+        ]);
+
+        echo $response->getBody();
+        // $otp = rand(100000, 999999);
+        // $user->otp_code = $otp;
+        // $user->save();
+
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => 'OTP sent successfully',
+        //     'otp' => $otp, // Remove this in production for security reasons
+        // ]);
     }
 
-    // Generate OTP (6-digit random number)
-    $otp = rand(100000, 999999);
+    // forgot password
+    public function forgot_password(Request $request){
+        $request->validate([
+            'phone' => 'required|string',
+            'token' => 'required|string',
+            'pin' => 'required|string',
+            'password' => 'required|string|min:6|confirmed', // Ensure password confirmation
+        ]);
+        $client = new \GuzzleHttp\Client();
 
-    // Here, you should integrate your SMS provider to send the OTP
-    // Example: SmsService::send($request->phone, "Your OTP is: $otp");
+        $response = $client->request('POST', 'https://otp.thaibulksms.com/v2/otp/verify', [
+        'form_params' => [
+            'key' => '1825361649636880',
+            'secret' => 'd4ce6d0f1a3a4f43cb5b6c2aea146084',
+            'token' => $request->token,
+            'pin' => $request->pin,
+        ],
+        'headers' => [
+            'accept' => 'application/json',
+            'content-type' => 'application/x-www-form-urlencoded',
+        ],
+        ]);
 
-    // Save OTP to the user table (optional, depending on your implementation)
-    $user->otp_code = $otp;
-    $user->save();
+        // check otp done
+        if($response->getStatusCode() == 200){
+            $user = User::where('phone', $request->phone)->first();
+            $user->password = Hash::make($request->password);
+            $user->save();
 
-    return response()->json([
-        'status' => true,
-        'message' => 'OTP sent successfully',
-        'otp' => $otp, // Remove this in production for security reasons
-    ]);
-}
+            return response()->json([
+                'status' => true,
+                'message' => 'Password reset successfully',
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'OTP invalid',
+            ]);
+        }
+
+
+        // $user = User::where('phone', $request->phone)->first();
+
+        // if (!$user) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => 'Wrong number, user not found',
+        //     ], 404);
+        // }
+        // $otp = rand(100000, 999999);
+        // $user->otp_code = $otp;
+        // $user->save();
+
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => 'OTP sent successfully',
+        //     'otp' => $otp, // Remove this in production for security reasons
+        // ]);
+    }
+
     // logout
     public function logout(){
         auth() -> user() -> tokens() -> delete();
