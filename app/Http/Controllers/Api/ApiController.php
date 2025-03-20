@@ -66,7 +66,7 @@ class ApiController extends Controller
         ]);
 
         // echo $response->getBody();
-        echo $response->getStatusCode();
+        //echo $response->getStatusCode();
 
         // check otp done
         if($response->getStatusCode() == 200){
