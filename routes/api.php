@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\WorkPermitDetailController;
 use App\Http\Controllers\Api\MarriageCertificateController;
 
 Route::post("register", [ApiController:: class, "register"]);
+Route::post('otp_register', [ApiController::class, 'otp_register']);
 Route::post("login", [ApiController::class, "login"]);
 
 Route::get('/banner_image', [BannerImageController::class, 'index']);

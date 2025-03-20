@@ -7,14 +7,38 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+require_once('vendor/autoload.php');
+
 class ApiController extends Controller
 {
-    public function register(Request $request){
+    // otp register
+    public function otp_register(Request $request){
         $request-> validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string|unique:users,phone',
             'password' => 'required|string|min:6',
         ]);
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', 'https://otp.thaibulksms.com/v2/otp/request', [
+        'form_params' => [
+            'key' => '1825361649636880',
+            'secret' => 'd4ce6d0f1a3a4f43cb5b6c2aea146084',
+            'msisdn' => $request->phone
+        ],
+        'headers' => [
+            'accept' => 'application/json',
+            'content-type' => 'application/x-www-form-urlencoded',
+        ],
+        ]);
+
+        echo $response->getBody();
+    }
+
+
+    // register
+    public function register(Request $request){
+
         User::create($request->all());
         return response()->json([
             'status' => true,
@@ -22,7 +46,7 @@ class ApiController extends Controller
         ]);
     }
 
-
+    // login
     public function login(Request $request){
         $request -> validate([
             'phone' => 'required|string',
@@ -55,6 +79,7 @@ class ApiController extends Controller
         }
     }
 
+    // get profile
     public function profile(){
         $userdata = auth()->user();
         return response() -> json([
@@ -64,6 +89,7 @@ class ApiController extends Controller
         ]);
     }
 
+    // update profile
     public function update_profile(Request $request){
         $user = auth()->user();
 
@@ -125,7 +151,7 @@ class ApiController extends Controller
         'otp' => $otp, // Remove this in production for security reasons
     ]);
 }
-
+    // logout
     public function logout(){
         auth() -> user() -> tokens() -> delete();
         return response() -> json([
