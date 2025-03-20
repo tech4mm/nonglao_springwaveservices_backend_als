@@ -39,12 +39,58 @@ class ApiController extends Controller
 
     // register
     public function register(Request $request){
-
-        User::create($request->all());
-        return response()->json([
-            'status' => true,
-            'message' => 'User register successfully.'
+        $request-> validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|unique:users,phone',
+            'password' => 'required|string|min:6',
+            'token' => 'required|string',
+            'pin' => 'required|string',
         ]);
+
+
+        // check otp
+
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', 'https://otp.thaibulksms.com/v2/otp/verify', [
+        'form_params' => [
+            'key' => '1825361649636880',
+            'secret' => 'd4ce6d0f1a3a4f43cb5b6c2aea146084',
+            'token' => $request->token,
+            'pin' => $request->pin,
+        ],
+        'headers' => [
+            'accept' => 'application/json',
+            'content-type' => 'application/x-www-form-urlencoded',
+        ],
+        ]);
+
+        // echo $response->getBody();
+        echo $response->getStatusCode();
+
+        // check otp done
+        if($response->getStatusCode() == 200){
+            User::create([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'password' => Hash::make($request->password),
+            ]);
+            return response()->json([
+                'status' => true,
+                'message' => 'User register successfully.'
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'OTP invalid',
+            ]);
+        }
+
+        // User::create($request->all());
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => 'User register successfully.'
+        // ]);
     }
 
     // login
