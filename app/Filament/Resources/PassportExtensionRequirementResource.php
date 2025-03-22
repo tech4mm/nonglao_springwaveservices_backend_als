@@ -62,8 +62,8 @@ class PassportExtensionRequirementResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('s_body')
                     ->required(),
-                Forms\Components\Checkbox::make('type')
-                    ->label('Type'),
+                Forms\Components\Toggle::make('type')
+                    ->required(),
             ]);
     }
 
