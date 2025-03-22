@@ -49,7 +49,12 @@ class UserResource extends Resource
             TextInput::make('name')
                 ->required()
                 ->label('Name'),
-            Forms\Components\FileUpload::make('user_picture')->label('User Picture')->nullable(),
+            Forms\Components\FileUpload::make('user_picture')
+                ->label('User Picture')->nullable()
+                ->disk('public')
+                ->preserveFilenames()
+                ->image()
+                ->storeFileNamesIn('user_picture'), // Ensures JSON format
             TextInput::make('phone')
                 ->required()
                 ->unique(ignoreRecord: true)
