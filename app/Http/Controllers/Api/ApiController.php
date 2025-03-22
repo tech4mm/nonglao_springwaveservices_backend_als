@@ -143,8 +143,10 @@ class ApiController extends Controller
             $user->password = Hash::make($request->password);
         }
         if ($request->hasFile('profile_pic')) {
-            $profilePicPath = $request->file('profile_pic')->store('profile_pics', 'public');
-            $user->profile_pic = $profilePicPath;
+            $file = $request->file('profile_pic');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/profile_pics', $filename);
+            $user->user_picture = 'profile_pics/' . $filename;
         }
 
         $user->save();
