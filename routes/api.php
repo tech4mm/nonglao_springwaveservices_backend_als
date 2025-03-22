@@ -39,6 +39,7 @@ Route::get('/visa_extension_requirements', [VisaExtensionRequirementController::
 Route::get('/passport_extension_requirements', [PassportExtensionRequirementController::class, 'index']);
 Route::get('/marriage_certificate_requirements', [MarriageCertificateRequirementController::class, 'index']);
 Route::get('/ninety_day_requirements', [NinetyDayRequirementController::class, 'index']);
+
 Route::post('/forgot_password', [ApiController::class, 'forgot_password']);
 Route::post('/otp_forgot_password', [ApiController::class, 'otp_forgot_password']);
 
