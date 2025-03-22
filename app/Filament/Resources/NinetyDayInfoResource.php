@@ -89,7 +89,7 @@ class NinetyDayInfoResource extends Resource
                 Tables\Columns\TextColumn::make('nationality')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('issue_date')
+                Tables\Columns\TextColumn::make('issure_date')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('expire_date')
