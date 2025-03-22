@@ -51,8 +51,10 @@ class UserResource extends Resource
                 ->label('Name'),
             Forms\Components\FileUpload::make('user_picture')
                 ->label('User Picture')->nullable()
-                ->disk('public/profile_pic')
+                ->disk('public')
+                ->directory('user_picture') // ✅ Optional: stores inside /storage/app/public/user_picture
                 ->preserveFilenames()
+                ->nullable()
                 ->image(),
             TextInput::make('phone')
                 ->required()
