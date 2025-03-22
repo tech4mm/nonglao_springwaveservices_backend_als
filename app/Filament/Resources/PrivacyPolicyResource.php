@@ -47,6 +47,7 @@ class PrivacyPolicyResource extends Resource
                 //
                 RichEditor::make('body')
                 ->label('Privacy Policy Body')
+                ->columnSpan(2)
                 ->required(),
             ]);
     }

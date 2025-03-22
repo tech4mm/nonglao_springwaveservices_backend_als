@@ -46,6 +46,7 @@ class TermsConditionResource extends Resource
                 //
                 RichEditor::make('body')
                 ->label('Terms & Conditions Body')
+                ->columnSpan(2)
                 ->required(),
             ]);
     }
