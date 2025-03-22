@@ -49,11 +49,13 @@ class WorkPermitDetailResource extends Resource
                 ->required(),
 
                 Forms\Components\FileUpload::make('photo')
-    ->disk('public') // Ensure it's stored properly
-    ->directory('uploads/photos') // Adjust path if necessary
-    ->storeFileNamesIn('photo') // Store only the file name if needed
-    ->preserveFilenames()
-    ->required(),
+                    ->disk('public')
+                    ->directory('uploads/photos')
+                    ->storeFileNamesIn('photo') // Will store array of filenames
+                    ->preserveFilenames()
+                    ->multiple()
+                    ->image()
+                    ->required(),
 
                 Forms\Components\TextInput::make('name'),
 
