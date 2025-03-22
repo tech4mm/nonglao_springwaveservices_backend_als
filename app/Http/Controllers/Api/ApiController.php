@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Composer\Autoload\ClassLoader;
+use PhpParser\Node\Stmt\TryCatch;
 
 // require_once('vendor/autoload.php');
 
@@ -145,10 +146,19 @@ class ApiController extends Controller
         if ($request->hasFile('profile_pic')) {
             $file = $request->file('profile_pic');
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/profile_pics', $filename);
-            $user->user_picture = 'profile_pics/' . $filename;
-            // $file->storeAs('public/uploads/photos', $filename);
-            // $user->user_picture = 'uploads/photos/' . $filename;
+            try {
+                //code...
+                $file->storeAs('public/profile_pics', $filename);
+                $user->user_picture = 'profile_pics/' . $filename;
+            } catch (\Throwable $th) {
+                //throw $th;
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Profile picture not uploaded',
+                ]);
+            }
+            // $file->storeAs('public/profile_pics', $filename);
+            // $user->user_picture = 'profile_pics/' . $filename;
         }
 
         $user->save();
