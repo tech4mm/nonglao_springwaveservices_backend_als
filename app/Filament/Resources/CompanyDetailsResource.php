@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
 
@@ -45,9 +46,14 @@ class CompanyDetailsResource extends Resource
     {
         return $form
             ->schema([
-                Textarea::make('application_details')->columnSpan(2),
-                Textarea::make('company_address')->columnSpan(2),
-                Textarea::make('company_bank_details')->columnSpan(2),
+                RichEditor::make('application_details')->columnSpan(2),
+                RichEditor::make('company_address')->columnSpan(2),
+                RichEditor::make('company_bank_details')->columnSpan(2),
+
+                // RichEditor::make('body')
+                // ->label('Privacy Policy Body')
+                // ->required(),
+
                 FileUpload::make('bank_payment_qr')
                     ->image()
                     ->directory('qr_codes')
