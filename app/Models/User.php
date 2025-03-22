@@ -34,6 +34,10 @@ class User extends Authenticatable implements FilamentUser
         'otp_code',
         'user_picture'
     ];
+    public function getUserPictureAttribute($value)
+{
+    return $value ? 'storage/' . $value : null;
+}
 
     // my modi code
     public function canAccessPanel(Panel $panel): bool
