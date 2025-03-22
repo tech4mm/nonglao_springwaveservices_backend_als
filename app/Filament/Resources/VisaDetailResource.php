@@ -49,12 +49,13 @@ class VisaDetailResource extends Resource
                 ->required(),
 
                 Forms\Components\FileUpload::make('photo')
-                ->disk('public')
-                ->directory('uploads/photos')
-                ->preserveFilenames()
-                ->image()
-                ->storeFileNamesIn('photo') // Ensures JSON format
-                ->required(),
+                    ->disk('public')
+                    ->directory('uploads/photos')
+                    ->preserveFilenames()
+                    ->image()
+                    ->multiple()
+                    ->storeFileNamesIn('photo') // Ensures JSON format
+                    ->required(),
 
                 Forms\Components\TextInput::make('name')
                     ->required()
