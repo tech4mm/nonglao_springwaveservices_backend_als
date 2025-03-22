@@ -64,7 +64,7 @@ class NinetyDayInfoResource extends Resource
                 Forms\Components\TextInput::make('nationality')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('issue_date')
+                Forms\Components\DatePicker::make('issure_date')
                     ->required(),
                 Forms\Components\DatePicker::make('expire_date')
                     ->required(),
