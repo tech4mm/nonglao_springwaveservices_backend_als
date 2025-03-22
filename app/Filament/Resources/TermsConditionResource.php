@@ -12,7 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Columns\TextColumn;
 
 class TermsConditionResource extends Resource
@@ -44,10 +44,9 @@ class TermsConditionResource extends Resource
         return $form
             ->schema([
                 //
-                Textarea::make('body')
+                RichEditor::make('body')
                 ->label('Terms & Conditions Body')
-                ->required()
-                ->maxLength(65535), 
+                ->required(),
             ]);
     }
 
