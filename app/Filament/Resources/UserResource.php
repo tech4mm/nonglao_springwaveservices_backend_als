@@ -53,7 +53,6 @@ class UserResource extends Resource
                 ->label('User Picture')->nullable()
                 ->disk('public')
                 ->directory('user_picture') // ✅ Optional: stores inside /storage/app/public/user_picture
-                ->preserveFilenames()
                 ->nullable()
                 ->image(),
             TextInput::make('phone')
