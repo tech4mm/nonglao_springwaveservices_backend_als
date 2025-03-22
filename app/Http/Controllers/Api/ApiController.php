@@ -148,7 +148,9 @@ class ApiController extends Controller
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
             try {
                 //code...
-                $file->storeAs('public/profile_pics', $filename);
+                // $file->storeAs('public/profile_pics', $filename);
+                //Storage::disk('public')->putFileAs('profile_pics', $file, $filename);
+                $file->storeAs('profile_pics', $filename, 'public');
                 $user->user_picture = 'profile_pics/' . $filename;
             } catch (\Throwable $th) {
                 //throw $th;
@@ -157,8 +159,6 @@ class ApiController extends Controller
                     'message' => 'Profile picture not uploaded',
                 ]);
             }
-            // $file->storeAs('public/profile_pics', $filename);
-            // $user->user_picture = 'profile_pics/' . $filename;
         }
 
         $user->save();
