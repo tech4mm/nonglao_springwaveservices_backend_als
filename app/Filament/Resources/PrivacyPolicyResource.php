@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Columns\TextColumn;
 
 class PrivacyPolicyResource extends Resource
@@ -44,10 +45,9 @@ class PrivacyPolicyResource extends Resource
         return $form
             ->schema([
                 //
-                Textarea::make('body')
+                RichEditor::make('body')
                 ->label('Privacy Policy Body')
-                ->required()
-                ->maxLength(65535),
+                ->required(),
             ]);
     }
 
