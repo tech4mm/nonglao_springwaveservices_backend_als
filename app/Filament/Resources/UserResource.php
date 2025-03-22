@@ -59,10 +59,10 @@ class UserResource extends Resource
                 ->email()
                 ->unique(ignoreRecord: true)
                 ->label('Email'),
-            // TextInput::make('password')
-            //     ->password() // Use password method here
-            //     ->label('Password')
-            //     ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
+            TextInput::make('password')
+                ->password() // Use password method here
+                ->label('Password')
+                ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
             ]);
     }
 
