@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\WorkerInfoController;
 use App\Http\Controllers\Api\PassportDetailController;
 use App\Http\Controllers\Api\WorkPermitDetailController;
 use App\Http\Controllers\Api\MarriageCertificateController;
+use App\Http\Controllers\Api\FcmTokenController;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post('otp_register', [ApiController::class, 'otp_register']);
@@ -43,6 +44,7 @@ Route::get('/ninety_day_requirements', [NinetyDayRequirementController::class, '
 Route::post('/forgot_password', [ApiController::class, 'forgot_password']);
 Route::post('/otp_forgot_password', [ApiController::class, 'otp_forgot_password']);
 
+
 Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get("profile", [ApiController::class, "profile"]);
     Route::get("logout", [ApiController::class, "logout"]);
@@ -52,7 +54,10 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get('/work_permit_info', [WorkPermitDetailController::class, 'getWorkPermitInfo']);
     Route::get('/ninety_day_info', [NinetyDayDetailController::class, 'getNinetyDayInfo']);
     Route::get('/marriage_info', [MarriageCertificateController::class, 'getMarriageCertificateInfo']);
+
     Route::post('/update_profile', [ApiController::class, 'update_profile']);
+
+    Route::post('/store-fcm-token', [FcmTokenController::class, 'store']);
 });
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
