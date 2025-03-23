@@ -41,11 +41,19 @@ class NinetyDayInfoResource extends Resource
     {
         return $form
             ->schema([
+                // Forms\Components\Select::make('user_id')
+                //     ->label('User')
+                //     ->relationship('user', 'name')
+                //     ->searchable()
+                //     ->preload()
+                //     ->required(),
                 Forms\Components\Select::make('user_id')
                     ->label('User')
                     ->relationship('user', 'name')
                     ->searchable()
                     ->preload()
+                    ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->id} - {$record->phone} - {$record->name}")
+                    ->searchable()
                     ->required(),
                 Forms\Components\FileUpload::make('photo')
                     ->image()
