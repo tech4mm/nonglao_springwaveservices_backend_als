@@ -27,9 +27,9 @@ class BannerTextResource extends Resource
             ->schema([
                 //
                 Textarea::make('e_body')->label('English Body')->required(),
-            Textarea::make('m_body')->label('Myanmar Body')->required(),
-            Textarea::make('t_body')->label('Thai Body')->required(),
-            Textarea::make('s_body')->label('Sundanese Body')->required(),
+                Textarea::make('m_body')->label('Myanmar Body')->required(),
+                Textarea::make('t_body')->label('Thai Body')->required(),
+                Textarea::make('s_body')->label('Sundanese Body')->required(),
             ]);
     }
 
@@ -39,15 +39,16 @@ class BannerTextResource extends Resource
             ->columns([
                 //
                 TextColumn::make('e_body')->limit(50),
-            TextColumn::make('m_body')->limit(50),
-            TextColumn::make('t_body')->limit(50),
-            TextColumn::make('s_body')->limit(50),
+                TextColumn::make('m_body')->limit(50),
+                TextColumn::make('t_body')->limit(50),
+                TextColumn::make('s_body')->limit(50),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
