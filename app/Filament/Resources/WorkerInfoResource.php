@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\WorkerInfoResource\Pages;
 use App\Filament\Resources\WorkerInfoResource\RelationManagers;
 use App\Models\WorkerInfo;
+use Filament\Actions\DeleteAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -66,15 +67,15 @@ class WorkerInfoResource extends Resource
                 Forms\Components\Textarea::make('myan_address')->label('Myanmar Address')->nullable(),
                 Forms\Components\Textarea::make('work_place_address')->label('Workplace Address')->nullable(),
                 Forms\Components\TextInput::make('other_name')->label('Other Name')->nullable(),
-Forms\Components\Select::make('gender')
-    ->label('Gender')
-    ->options([
-        'male' => 'Male',
-        'female' => 'Female',
-        'other' => 'Other',
-    ])
-    ->nullable(),
-Forms\Components\DatePicker::make('date_of_birth')->label('Date of Birth')->nullable(),
+                Forms\Components\Select::make('gender')
+                    ->label('Gender')
+                    ->options([
+                        'male' => 'Male',
+                        'female' => 'Female',
+                        'other' => 'Other',
+                    ])
+                    ->nullable(),
+                Forms\Components\DatePicker::make('date_of_birth')->label('Date of Birth')->nullable(),
             ]);
     }
 
@@ -93,6 +94,7 @@ Forms\Components\DatePicker::make('date_of_birth')->label('Date of Birth')->null
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
