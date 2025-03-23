@@ -10,10 +10,10 @@ class ListCompanyDetails extends ListRecords
 {
     protected static string $resource = CompanyDetailsResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
+    // protected function getHeaderActions(): array
+    // {
+    //     return [
+    //         Actions\CreateAction::make(),
+    //     ];
+    // }
 }

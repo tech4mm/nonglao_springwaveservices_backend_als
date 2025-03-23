@@ -10,10 +10,10 @@ class ListPrivacyPolicies extends ListRecords
 {
     protected static string $resource = PrivacyPolicyResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
+    // protected function getHeaderActions(): array
+    // {
+    //     return [
+    //         Actions\CreateAction::make(),
+    //     ];
+    // }
 }

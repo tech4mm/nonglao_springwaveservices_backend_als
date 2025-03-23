@@ -10,10 +10,10 @@ class EditCompanyDetails extends EditRecord
 {
     protected static string $resource = CompanyDetailsResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\DeleteAction::make(),
-        ];
-    }
+    // protected function getHeaderActions(): array
+    // {
+    //     return [
+    //         Actions\DeleteAction::make(),
+    //     ];
+    // }
 }
