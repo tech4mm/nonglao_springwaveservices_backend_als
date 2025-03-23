@@ -81,8 +81,6 @@ class UserResource extends Resource
                 TextColumn::make('id')->sortable()->searchable(),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('phone')->sortable()->searchable(),
-                // TextColumn::make('email')->sortable()->searchable(),
-                // TextColumn::make('created_at')->sortable(),
                 TextColumn::make('updated_at')->sortable(),
             ])
             ->filters([
@@ -96,7 +94,12 @@ class UserResource extends Resource
                     ->form([
                         TextInput::make('title')->required()->label('Notification Title'),
                         TextInput::make('body')->required()->label('Notification Body'),
-                        TextInput::make('image')->label('Image URL')->nullable(),
+                        Forms\Components\FileUpload::make('image')
+                            ->label('Upload Image')
+                            ->disk('public')
+                            ->directory('notifications')
+                            ->image()
+                            ->nullable(),
                     ])
                     ->action(function (array $data, User $record): void {
                         if (!$record->fcm_token) {
