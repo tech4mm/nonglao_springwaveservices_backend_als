@@ -47,7 +47,7 @@ class ContactUsResource extends Resource
                 TextInput::make('contact_phone')
                 ->label('Contact Phone')
                 ->required()
-                ->maxLength(255),
+                ->maxLength(15),
             ]);
     }
 
@@ -57,9 +57,7 @@ class ContactUsResource extends Resource
             ->columns([
                 //
                 TextColumn::make('contact_phone')
-                ->label('Contact Phone')
-                ->sortable()
-                ->searchable(),
+                ->label('Contact Phone'),
             TextColumn::make('created_at')
                 ->label('Created At')
                 ->dateTime(),
@@ -71,9 +69,9 @@ class ContactUsResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
