@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\WorkPermitDetailController;
 use App\Http\Controllers\Api\MarriageCertificateController;
 use App\Http\Controllers\Api\FcmTokenController;
 use App\Models\ReportLiveInThRequirement;
+use App\Models\RecommendationLetterBanner;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post('otp_register', [ApiController::class, 'otp_register']);
@@ -47,6 +48,10 @@ Route::post('/otp_forgot_password', [ApiController::class, 'otp_forgot_password'
 
 Route::get('/report_live_in_th_requirement', function () {
     return ReportLiveInThRequirement::all();
+});
+
+Route::get('/recommendation_letter_banner', function () {
+    return RecommendationLetterBanner::all();
 });
 
 
