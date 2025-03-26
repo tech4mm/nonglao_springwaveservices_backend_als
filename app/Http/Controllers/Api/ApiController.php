@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Composer\Autoload\ClassLoader;
 use PhpParser\Node\Stmt\TryCatch;
 use App\Models\RegistrationInfo;
+use App\Models\HouseholdReg;
 
 // require_once('vendor/autoload.php');
 
@@ -121,10 +122,19 @@ class ApiController extends Controller
     public function get_register_info(){
         $data = RegistrationInfo::where('user_id', auth()->id())->get();
 
-    return response()->json([
-        'success' => true,
-        'data' => $data
-    ]);
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    public function get_household_reg(){
+        $data = HouseholdReg::where('user_id', auth()->id())->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
     }
 
     // get profile
