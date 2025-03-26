@@ -28,6 +28,7 @@ use App\Models\RecommendationLetterBanner;
 use App\Models\CertOfNVToOpenBankAccRequirement;
 use App\Models\CertificateOfAddressVerification;
 use App\Models\PassportDeclaration;
+use App\Models\BeingSingle;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post('otp_register', [ApiController::class, 'otp_register']);
@@ -67,6 +68,10 @@ Route::get('/certificate-of-address-verification', function () {
 
 Route::get('/passport-declaration', function () {
     return PassportDeclaration::all();
+});
+
+Route::get('/being-single', function () {
+    return BeingSingle::all();
 });
 
 Route::group(["middleware" => ["auth:sanctum"]], function(){
