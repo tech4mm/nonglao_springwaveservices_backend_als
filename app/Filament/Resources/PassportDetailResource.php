@@ -84,6 +84,7 @@ class PassportDetailResource extends Resource
                     'Female' => 'Female',
                     'Other' => 'Other',
                 ])
+                ->native(false)
                 ->required(),
 
             Forms\Components\DatePicker::make('date_of_birth')
