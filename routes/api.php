@@ -106,6 +106,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
 
     Route::get('/get_tax_list', [ApiController::class, 'get_tax_list']);
     Route::get('/get_owic_req', [ApiController::class, 'get_owic_req']);
+    Route::get('/get_expire', [ExpireInfoController::class, 'getExpireDates']);
     //Route::get('/get_worker_info', [ApiController::class, 'get_worker_info']);
 });
 // Route::get('/user', function (Request $request) {
