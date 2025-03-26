@@ -3,3 +3,8 @@ ln -s /var/www/html/nong_springwaveservices_backend_als/storage/app/public/banne
 
 # logo change || update
 under -> storage/app/public/images/logo.jpg (if there is no images folder create it)
+
+# if there is no user profile pic in users table -> run this
+php artisan migrate:rollback --step=1
+php artisan migrate
+
