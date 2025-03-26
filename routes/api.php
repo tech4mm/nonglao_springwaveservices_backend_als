@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\PassportDetailController;
 use App\Http\Controllers\Api\WorkPermitDetailController;
 use App\Http\Controllers\Api\MarriageCertificateController;
 use App\Http\Controllers\Api\FcmTokenController;
+use App\Http\Controllers\Api\ExpireInfoController;
 use App\Models\ReportLiveInThRequirement;
 use App\Models\RecommendationLetterBanner;
 use App\Models\CertOfNVToOpenBankAccRequirement;
