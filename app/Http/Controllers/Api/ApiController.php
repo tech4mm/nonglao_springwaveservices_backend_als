@@ -11,6 +11,7 @@ use PhpParser\Node\Stmt\TryCatch;
 use App\Models\RegistrationInfo;
 use App\Models\HouseholdReg;
 use App\Models\UidReq;
+use App\Models\TaxAdd;
 
 // require_once('vendor/autoload.php');
 
@@ -176,6 +177,16 @@ class ApiController extends Controller
 
     public function get_uid_req(){
         $data = UidReq::where('user_id', auth()->id())->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    public function get_tax_list()
+    {
+        $data = TaxAdd::where('user_id', auth()->id())->get();
 
         return response()->json([
             'success' => true,

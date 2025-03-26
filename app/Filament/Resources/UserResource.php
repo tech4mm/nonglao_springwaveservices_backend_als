@@ -95,6 +95,7 @@ class UserResource extends Resource
                 TextColumn::make('id')->sortable()->searchable(),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('phone')->sortable()->searchable(),
+                TextColumn::make('tax_payer_number')->label('Taxpayer Number')->sortable()->searchable(),
                 TextColumn::make('updated_at')->sortable(),
             ])
             ->filters([

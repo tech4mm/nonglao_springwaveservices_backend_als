@@ -103,6 +103,8 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get('/get_uid_req', [ApiController::class,'get_uid_req']);
     Route::get('/get_tax_payer_number', [ApiController::class, 'get_tax_payer_number']);
     Route::post('/set_tax_payer_number', [ApiController::class, 'set_tax_payer_number']);
+
+    Route::get('/get_tax_list', [ApiController::class, 'get_tax_list']);
     //Route::get('/get_worker_info', [ApiController::class, 'get_worker_info']);
 });
 // Route::get('/user', function (Request $request) {
