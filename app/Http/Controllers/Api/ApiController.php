@@ -12,6 +12,7 @@ use App\Models\RegistrationInfo;
 use App\Models\HouseholdReg;
 use App\Models\UidReq;
 use App\Models\TaxAdd;
+use App\Models\OwicReq;
 
 // require_once('vendor/autoload.php');
 
@@ -123,6 +124,15 @@ class ApiController extends Controller
 
     public function get_register_info(){
         $data = RegistrationInfo::where('user_id', auth()->id())->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    public function get_owic_req(){
+        $data = OwicReq::where('user_id', auth()->id())->get();
 
         return response()->json([
             'success' => true,

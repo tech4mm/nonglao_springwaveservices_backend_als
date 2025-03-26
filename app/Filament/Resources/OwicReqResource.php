@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UidReqResource\Pages;
-use App\Filament\Resources\UidReqResource\RelationManagers;
-use App\Models\UidReq;
+use App\Filament\Resources\OwicReqResource\Pages;
+use App\Filament\Resources\OwicReqResource\RelationManagers;
+use App\Models\OwicReq;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,13 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UidReqResource extends Resource
+class OwicReqResource extends Resource
 {
-    protected static ?string $model = UidReq::class;
+    protected static ?string $model = OwicReq::class;
 
     public static function getNavigationLabel(): string
     {
-        return 'UID Requirements'; // Custom text
+        return 'OWIC Requirements'; // Custom text
     }
 
     public static function getNavigationGroup(): ?string
@@ -29,7 +29,7 @@ class UidReqResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return 3; // Sorting order (lower values appear first)
+        return 5; // Sorting order (lower values appear first)
     }
 
     public static function getNavigationIcon(): ?string
@@ -42,7 +42,7 @@ class UidReqResource extends Resource
         return $form
             ->schema([
                 //
-                 Forms\Components\Select::make('user_id')
+                Forms\Components\Select::make('user_id')
                     ->label('User')
                     ->relationship('user', 'name')
                     ->searchable()
@@ -51,27 +51,27 @@ class UidReqResource extends Resource
                     ->searchable()
                     ->required(),
 
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
+            Forms\Components\TextInput::make('name')
+                ->required(),
 
-                Forms\Components\Select::make('gender')
-                    ->required()
-                    ->options([
-                        'Male' => 'Male',
-                        'Female' => 'Female',
-                        'Other' => 'Other',
-                    ]),
+            Forms\Components\Select::make('gender')
+                ->required()
+                ->options([
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                    'Other' => 'Other',
+                ]),
 
-                Forms\Components\TextInput::make('uid_number')
-                    ->required()
-                    ->maxLength(255),
+            Forms\Components\TextInput::make('owic_number')
+                ->required(),
 
-                Forms\Components\FileUpload::make('photo')
-                    ->label('Photo')
-                    ->directory('uid_photos')
-                    ->image()
-                    ->preserveFilenames(),
+            Forms\Components\FileUpload::make('photos')
+                ->label('OWIC Photos')
+                ->multiple()
+                ->directory('owic_photos')
+                ->reorderable()
+                ->preserveFilenames()
+                ->required(),
             ]);
     }
 
@@ -81,10 +81,14 @@ class UidReqResource extends Resource
             ->columns([
                 //
                 Tables\Columns\TextColumn::make('user.name')->label('User'),
-                Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('gender')->sortable(),
-                Tables\Columns\TextColumn::make('uid_number')->searchable(),
-                Tables\Columns\ImageColumn::make('photo')->label('Photo'),
+                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('gender'),
+                Tables\Columns\TextColumn::make('owic_number')->searchable(),
+                Tables\Columns\ImageColumn::make('photos')
+                    ->label('Photos')
+                    ->limit(3)
+                    ->stacked()
+                    ->circular(),
             ])
             ->filters([
                 //
@@ -109,9 +113,9 @@ class UidReqResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUidReqs::route('/'),
-            'create' => Pages\CreateUidReq::route('/create'),
-            'edit' => Pages\EditUidReq::route('/{record}/edit'),
+            'index' => Pages\ListOwicReqs::route('/'),
+            'create' => Pages\CreateOwicReq::route('/create'),
+            'edit' => Pages\EditOwicReq::route('/{record}/edit'),
         ];
     }
 }
