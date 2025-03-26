@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\FcmTokenController;
 use App\Models\ReportLiveInThRequirement;
 use App\Models\RecommendationLetterBanner;
 use App\Models\CertOfNVToOpenBankAccRequirement;
+use App\Models\CertificateOfAddressVerification;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post('otp_register', [ApiController::class, 'otp_register']);
@@ -59,6 +60,9 @@ Route::get('/cert-nv-bank-requirements', function () {
     return CertOfNVToOpenBankAccRequirement::all();
 });
 
+Route::get('/certificate-of-address-verification', function () {
+    return CertificateOfAddressVerification::all();
+});
 
 Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get("profile", [ApiController::class, "profile"]);
