@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Composer\Autoload\ClassLoader;
 use PhpParser\Node\Stmt\TryCatch;
+use App\Models\RegistrationInfo;
 
 // require_once('vendor/autoload.php');
 
@@ -115,6 +116,15 @@ class ApiController extends Controller
                 'message' => 'Phone invalid',
             ]);
         }
+    }
+
+    public function get_register_info(){
+        $data = RegistrationInfo::where('user_id', auth()->id())->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $data
+    ]);
     }
 
     // get profile
