@@ -97,8 +97,7 @@ class PassportDetailResource extends Resource
                 ->required(),
             Forms\Components\DatePicker::make('passport_expire_date')
                 ->label('Passport Expiry Date')
-                ->required()
-                ->date(),
+                ->required(),
 
             Forms\Components\TextInput::make('place_of_issue')
                 ->required()
