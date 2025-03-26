@@ -30,6 +30,7 @@ use App\Models\CertificateOfAddressVerification;
 use App\Models\PassportDeclaration;
 use App\Models\BeingSingle;
 use App\Models\DependencyRelative;
+use App\Models\OtherCertificate;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post('otp_register', [ApiController::class, 'otp_register']);
@@ -77,6 +78,10 @@ Route::get('/being-single', function () {
 
 Route::get('/dependency-relative', function () {
     return DependencyRelative::all();
+});
+
+Route::get('/other-certificates', function () {
+    return OtherCertificate::all();
 });
 
 Route::group(["middleware" => ["auth:sanctum"]], function(){
