@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Notification;
 use App\Models\User;
+use App\Services\FirebaseService;
 
 class NotificationController extends Controller
 {
@@ -32,30 +33,48 @@ class NotificationController extends Controller
 
         // Send FCM
         if ($user->fcm_token) {
-            $this->sendFcm($user->fcm_token, $notification);
+            $this->sendFCM($user->fcm_token, $notification);
         }
 
         return response()->json(['success' => true, 'notification' => $notification]);
     }
 
-    protected function sendFcm($token, $notification)
-    {
-        $serverKey = env('FCM_SERVER_KEY');
+    // protected function sendFcm($token, $notification)
+    // {
+    //     $serverKey = env('FCM_SERVER_KEY');
 
-        $payload = [
-            'to' => $token,
-            'notification' => [
-                'title' => $notification->title,
-                'body' => $notification->message,
-                'image' => $notification->image_url,
-            ],
-            'data' => [
-                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                'notification_id' => $notification->id,
-            ],
-        ];
+    //     $payload = [
+    //         'to' => $token,
+    //         'notification' => [
+    //             'title' => $notification->title,
+    //             'body' => $notification->message,
+    //             'image' => $notification->image_url,
+    //         ],
+    //         'data' => [
+    //             'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+    //             'notification_id' => $notification->id,
+    //         ],
+    //     ];
 
-        Http::withToken($serverKey)
-            ->post('https://fcm.googleapis.com/fcm/send', $payload);
+    //     Http::withToken($serverKey)
+    //         ->post('https://fcm.googleapis.com/fcm/send', $payload);
+    // }
+
+    public function sendFCM(Request $request, FirebaseService $fcm){
+        $request->validate([
+            'token' => 'required',
+            'title' => 'required',
+            'body' => 'required',
+            'image' => 'nullable|url',
+        ]);
+
+        $fcm->sendNotification(
+            $request->token,
+            $request->title,
+            $request->body,
+            $request->image
+        );
+
+        return response()->json(['success' => true]);
     }
 }

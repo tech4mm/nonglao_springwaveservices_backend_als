@@ -137,8 +137,7 @@ class UserResource extends Resource
                             ],
                         ];
 
-                        Http::withToken(env('FCM_SERVER_KEY'))
-                            ->post('https://fcm.googleapis.com/fcm/send', $payload);
+                        $response = Http::post(route('fcm.send.from.admin', ['user' => $record->id]), $payload);
 
                         \Filament\Notifications\Notification::make()
                             ->title("Notification sent to {$record->name}")

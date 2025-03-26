@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\WorkPermitDetailController;
 use App\Http\Controllers\Api\MarriageCertificateController;
 use App\Http\Controllers\Api\FcmTokenController;
 use App\Http\Controllers\Api\ExpireInfoController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Models\ReportLiveInThRequirement;
 use App\Models\RecommendationLetterBanner;
 use App\Models\CertOfNVToOpenBankAccRequirement;
@@ -85,6 +86,9 @@ Route::get('/other-certificates', function () {
     return OtherCertificate::all();
 });
 
+// Route::get('/send-notification/{user}', [NotificationController::class, 'sendNotification'])
+//         ->name('fcm.send');
+
 Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get("profile", [ApiController::class, "profile"]);
     Route::get("logout", [ApiController::class, "logout"]);
@@ -108,8 +112,13 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get('/get_tax_list', [ApiController::class, 'get_tax_list']);
     Route::get('/get_owic_req', [ApiController::class, 'get_owic_req']);
     Route::get('/get_expire', [ExpireInfoController::class, 'getExpireDates']);
-    //Route::get('/get_worker_info', [ApiController::class, 'get_worker_info']);
+
+    Route::post('/send-notification', [NotificationController::class, 'send']);
+
+    Route::get('/send-notification/{user}', [NotificationController::class, 'sendNotification'])
+        ->name('fcm.send');
 });
+
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
