@@ -40,6 +40,7 @@ class User extends Authenticatable implements FilamentUser
         'uid_number',
         'taxpayer_number',
         'owic_number',
+        'tax_payer_number',
     ];
     // public function getUserPictureAttribute($value){
     //     return $value ? 'storage/' . $value : null;

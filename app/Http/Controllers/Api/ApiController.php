@@ -148,6 +148,32 @@ class ApiController extends Controller
         ]);
     }
 
+    public function get_tax_payer_number(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'success' => true,
+            'tax_payer_number' => $user->tax_payer_number,
+        ]);
+    }
+
+    public function set_tax_payer_number(Request $request)
+    {
+        $validated = $request->validate([
+            'tax_payer_number' => 'required|string|max:255',
+        ]);
+
+        $user = $request->user();
+        $user->tax_payer_number = $validated['tax_payer_number'];
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Tax payer number updated successfully',
+        ]);
+    }
+
     public function get_uid_req(){
         $data = UidReq::where('user_id', auth()->id())->get();
 
