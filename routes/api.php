@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\PassportDetailController;
 use App\Http\Controllers\Api\WorkPermitDetailController;
 use App\Http\Controllers\Api\MarriageCertificateController;
 use App\Http\Controllers\Api\FcmTokenController;
+use App\Models\ReportLiveInThRequirement;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post('otp_register', [ApiController::class, 'otp_register']);
@@ -43,6 +44,10 @@ Route::get('/ninety_day_requirements', [NinetyDayRequirementController::class, '
 
 Route::post('/forgot_password', [ApiController::class, 'forgot_password']);
 Route::post('/otp_forgot_password', [ApiController::class, 'otp_forgot_password']);
+
+Route::get('/report_live_in_th_requirement', function () {
+    return ReportLiveInThRequirement::all();
+});
 
 
 Route::group(["middleware" => ["auth:sanctum"]], function(){
