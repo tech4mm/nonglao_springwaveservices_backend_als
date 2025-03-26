@@ -35,9 +35,9 @@ class AdminPanelProvider extends PanelProvider
 
                 ->brandLogo(asset('storage/images/logo.jpg')) // Custom Logo
                 ->brandLogoHeight('50px') // Adjust height
-                //->favicon(asset('images/logo.jpg')) // Custom Favicon
+                ->favicon(asset('images/logo.jpg')) // Custom Favicon
                 ->colors([
-                'primary' => '#FA03CD', // Custom primary color
+                'primary' => '#19daa5', // Custom primary color
             ])
 
             // end my code
