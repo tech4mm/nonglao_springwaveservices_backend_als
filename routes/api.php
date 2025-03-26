@@ -27,6 +27,7 @@ use App\Models\ReportLiveInThRequirement;
 use App\Models\RecommendationLetterBanner;
 use App\Models\CertOfNVToOpenBankAccRequirement;
 use App\Models\CertificateOfAddressVerification;
+use App\Models\PassportDeclaration;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post('otp_register', [ApiController::class, 'otp_register']);
@@ -62,6 +63,10 @@ Route::get('/cert-nv-bank-requirements', function () {
 
 Route::get('/certificate-of-address-verification', function () {
     return CertificateOfAddressVerification::all();
+});
+
+Route::get('/passport-declaration', function () {
+    return PassportDeclaration::all();
 });
 
 Route::group(["middleware" => ["auth:sanctum"]], function(){
