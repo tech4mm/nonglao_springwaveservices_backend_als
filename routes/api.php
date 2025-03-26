@@ -58,6 +58,8 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::post('/update_profile', [ApiController::class, 'update_profile']);
 
     Route::post('/store-fcm-token', [FcmTokenController::class, 'store']);
+
+    //Route::get('/get_worker_info', [ApiController::class, 'get_worker_info']);
 });
 // Route::get('/user', function (Request $request) {
 //     return $request->user();

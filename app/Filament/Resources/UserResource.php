@@ -60,7 +60,6 @@ class UserResource extends Resource
                 ->label('Phone'),
 
             TextInput::make('email')
-                ->required()
                 ->email()
                 ->unique(ignoreRecord: true)
                 ->label('Email'),
@@ -69,6 +68,21 @@ class UserResource extends Resource
                 ->password() // Use password method here
                 ->label('Password')
                 ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
+
+            TextInput::make('passport_number')->label('Passport Number')->nullable(),
+            Forms\Components\Select::make('gender')
+                ->label('Gender')
+                ->options([
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                    'Other' => 'Other',
+                ])
+                ->nullable(),
+            Forms\Components\DatePicker::make('date_of_birth')->label('Date of Birth')->nullable(),
+            TextInput::make('registration_number')->label('Registration Number')->nullable(),
+            TextInput::make('uid_number')->label('UID Number')->nullable(),
+            TextInput::make('taxpayer_number')->label('Taxpayer Number')->nullable(),
+            TextInput::make('owic_number')->label('OWIC Number')->nullable(),
 
             ]);
     }

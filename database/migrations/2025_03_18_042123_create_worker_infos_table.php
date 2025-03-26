@@ -18,6 +18,14 @@ return new class extends Migration
             $table->date('date_of_issue')->nullable();
             $table->string('place_of_issue')->nullable();
             $table->string('company_name')->nullable();
+            $table->string('other_name')->nullable();
+            $table->string('gender')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('thai_phone_no')->nullable();
+            $table->string('myan_phone_no')->nullable();
+            $table->text('thai_address')->nullable();
+            $table->text('myan_address')->nullable();
+            $table->text('work_place_address')->nullable();
             $table->timestamps();
         });
     }

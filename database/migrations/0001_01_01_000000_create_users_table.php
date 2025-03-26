@@ -11,12 +11,34 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Schema::create('users', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('name');
+        //     $table->string('email')->unique();
+        //     $table->timestamp('email_verified_at')->nullable();
+        //     $table->string('password');
+        //     $table->rememberToken();
+        //     $table->timestamps();
+        // });
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone')->unique()->nullable(); // Add phone column
             $table->string('password');
+            $table->string('user_picture')->nullable(); // Add user_picture column
+            $table->text('fcm_token')->nullable(); // Add fcm_token column
+
+            // 👉 Add new fields
+            $table->date('date_of_birth')->nullable();
+            $table->string('passport_number')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('registration_number')->nullable();
+            $table->string('uid_number')->nullable();
+            $table->string('taxpayer_number')->nullable();
+            $table->string('owic_number')->nullable();
+
+            $table->string('email')->unique()->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
