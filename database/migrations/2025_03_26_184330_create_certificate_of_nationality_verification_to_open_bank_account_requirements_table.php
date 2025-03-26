@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('work_permit_requirements', function (Blueprint $table) {
+        Schema::create('cert_of_n_v_to_open_bank_acc_requirements', function (Blueprint $table) {
             $table->id();
             $table->string('e_title');
             $table->text('e_body');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('work_permit_requirements');
+        Schema::dropIfExists('cert_of_n_v_to_open_bank_acc_requirements');
     }
 };

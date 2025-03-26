@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\MarriageCertificateController;
 use App\Http\Controllers\Api\FcmTokenController;
 use App\Models\ReportLiveInThRequirement;
 use App\Models\RecommendationLetterBanner;
+use App\Models\CertOfNVToOpenBankAccRequirement;
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post('otp_register', [ApiController::class, 'otp_register']);
@@ -52,6 +53,10 @@ Route::get('/report_live_in_th_requirement', function () {
 
 Route::get('/recommendation_letter_banner', function () {
     return RecommendationLetterBanner::all();
+});
+
+Route::get('/cert-nv-bank-requirements', function () {
+    return CertOfNVToOpenBankAccRequirement::all();
 });
 
 
