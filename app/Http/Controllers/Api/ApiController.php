@@ -10,6 +10,7 @@ use Composer\Autoload\ClassLoader;
 use PhpParser\Node\Stmt\TryCatch;
 use App\Models\RegistrationInfo;
 use App\Models\HouseholdReg;
+use App\Models\UidReq;
 
 // require_once('vendor/autoload.php');
 
@@ -144,6 +145,15 @@ class ApiController extends Controller
             'status' => true,
             'message' => 'User data',
             'data' =>  $userdata,
+        ]);
+    }
+
+    public function get_uid_req(){
+        $data = UidReq::where('user_id', auth()->id())->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
         ]);
     }
 

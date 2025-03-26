@@ -100,6 +100,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
 
     Route::get('/register-info', [ApiController::class, 'get_register_info']);
     Route::get('/get_household_reg', [ApiController::class, 'get_household_reg']);
+    Route::get('/get_uid_req', [ApiController::class,'get_uid_req']);
     //Route::get('/get_worker_info', [ApiController::class, 'get_worker_info']);
 });
 // Route::get('/user', function (Request $request) {
