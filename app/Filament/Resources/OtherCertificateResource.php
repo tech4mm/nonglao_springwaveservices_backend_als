@@ -17,7 +17,25 @@ class OtherCertificateResource extends Resource
 {
     protected static ?string $model = OtherCertificate::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Other Certificates'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Recommendation Letter'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 7; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-user-group'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

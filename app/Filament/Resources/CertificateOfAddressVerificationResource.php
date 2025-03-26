@@ -17,7 +17,25 @@ class CertificateOfAddressVerificationResource extends Resource
 {
     protected static ?string $model = CertificateOfAddressVerification::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Certificate of Address Vertifiation'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Recommendation Letter'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 3; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-user-group'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

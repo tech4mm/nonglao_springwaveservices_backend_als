@@ -17,7 +17,25 @@ class BeingSingleResource extends Resource
 {
     protected static ?string $model = BeingSingle::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Certificate of Being Single'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Recommendation Letter'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 5; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-user-group'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {

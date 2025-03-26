@@ -19,7 +19,25 @@ class RecommendationLetterBannerResource extends Resource
 {
     protected static ?string $model = RecommendationLetterBanner::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationLabel(): string
+    {
+        return 'Banner'; // Custom text
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Recommendation Letter'; // Custom group
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1; // Sorting order (lower values appear first)
+    }
+
+    public static function getNavigationIcon(): ?string
+    {
+        return 'heroicon-o-user-group'; // Icon (from Heroicons)
+    }
 
     public static function form(Form $form): Form
     {
