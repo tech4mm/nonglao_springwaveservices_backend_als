@@ -140,24 +140,28 @@ class UserResource extends Resource
                         ];
 
                         $response = Http::post(route('fcm.send.from.admin', ['user' => $record->id]), $payload);
+                        Log::info('FCM Response', [
+                            'status' => $response->status(),
+                            'body' => $response->body()
+                        ]);
                         //dd($response);
-                        try {
-                            AdminNotification::create([
-                                'user_id' => $record->id, // Use the record's ID directly
-                                'title' => $data['title'],
-                                'content' => $data['body'],
-                                'image' => $data['image'] ?? null,
-                                'fcm_token' => $record->fcm_token,
-                                'status' => $response->successful() ? 'sent' : 'failed',
-                            ]);
-                        } catch (\Exception $e) {
-                            Log::error('Notification DB error: ' . $e->getMessage());
-                        }
+                        // try {
+                        //     AdminNotification::create([
+                        //         'user_id' => $record->id, // Use the record's ID directly
+                        //         'title' => $data['title'],
+                        //         'content' => $data['body'],
+                        //         'image' => $data['image'] ?? null,
+                        //         'fcm_token' => $record->fcm_token,
+                        //         'status' => $response->successful() ? 'sent' : 'failed',
+                        //     ]);
+                        // } catch (\Exception $e) {
+                        //     Log::error('Notification DB error: ' . $e->getMessage());
+                        // }
 
-                        \Filament\Notifications\Notification::make()
-                            ->title("Notification sent to {$record->name}")
-                            ->success()
-                            ->send();
+                        // \Filament\Notifications\Notification::make()
+                        //     ->title("Notification sent to {$record->name}")
+                        //     ->success()
+                        //     ->send();
                     })
                     ->modalHeading('Send FCM Notification')
                     ->requiresConfirmation(),

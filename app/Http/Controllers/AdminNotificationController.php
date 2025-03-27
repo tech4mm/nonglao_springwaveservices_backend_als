@@ -26,7 +26,9 @@ class AdminNotificationController extends Controller
         $accessToken = $client->getAccessToken()['access_token'];
 
         $projectId = json_decode(file_get_contents(storage_path('app/service-account.json')), true)['project_id'];
-        $fcmUrl = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
+        // $fcmUrl = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
+
+        $fcmUrl = "https://fcm.googleapis.com/v1/projects/spring-wave-a2661/messages:send";
 
         $fcmMessage = [
             'message' => [
@@ -34,15 +36,15 @@ class AdminNotificationController extends Controller
                 'notification' => [
                     'title' => $request->title,
                     'body' => $request->content,
-                    'image' => $request->image,
+                    // 'image' => $request->image,
                 ],
-                'data' => [
-                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                    'status' => 'done',
-                    'title' => $request->title,
-                    'body' => $request->content,
-                    'image' => $request->image,
-                ]
+                // 'data' => [
+                //     'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                //     'status' => 'done',
+                //     'title' => $request->title,
+                //     'body' => $request->content,
+                //     'image' => $request->image,
+                // ]
             ]
         ];
 
