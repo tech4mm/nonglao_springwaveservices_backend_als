@@ -115,4 +115,6 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
 
     Route::delete('/delete-account', [ApiController::class, 'deleteAccount']);
 
+    Route::post('/change-password', [ApiController::class, 'changePassword']);
+
 });

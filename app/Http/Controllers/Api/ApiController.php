@@ -293,6 +293,23 @@ class ApiController extends Controller
         ]);
     }
 
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = $request->user();
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        // Logout (delete all tokens)
+        $user->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Password changed successfully. Please log in again.',
+        ]);
+    }
 
     // otp_forgot_password
     public function otp_forgot_password(Request $request){
