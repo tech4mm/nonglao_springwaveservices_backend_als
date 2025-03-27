@@ -135,6 +135,12 @@ class UserResource extends Resource
                                 ]);
 
                             $messaging->send($message);
+                            AdminNotification::create([
+                                'user_id' => $record->id,
+                                'title' => $data['title'],
+                                'body' => $data['body'],
+                                'image' => $data['image'] ?? null,
+                            ]);
 
                             \Filament\Notifications\Notification::make()
                                 ->title("Notification sent to {$record->name}")

@@ -24,7 +24,7 @@ use App\Http\Controllers\Api\WorkPermitDetailController;
 use App\Http\Controllers\Api\MarriageCertificateController;
 use App\Http\Controllers\Api\FcmTokenController;
 use App\Http\Controllers\Api\ExpireInfoController;
-use App\Http\Controllers\Api\AdminNotificationController;
+use App\Http\Controllers\AdminNotificationController;
 use App\Models\ReportLiveInThRequirement;
 use App\Models\RecommendationLetterBanner;
 use App\Models\CertOfNVToOpenBankAccRequirement;
@@ -110,12 +110,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get('/get_owic_req', [ApiController::class, 'get_owic_req']);
     Route::get('/get_expire', [ExpireInfoController::class, 'getExpireDates']);
 
-    // Route::post('/send-notification', [NotificationController::class, 'send']);
+    Route::get('/notifications', [AdminNotificationController::class, 'index']);
+    Route::get('/notifications/{id}', [AdminNotificationController::class, 'show']);
 
-    // Route::get('/send-notification/{user}', [NotificationController::class, 'sendNotification'])
-    //     ->name('fcm.send');
 });
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');

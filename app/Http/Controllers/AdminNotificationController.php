@@ -69,4 +69,15 @@ class AdminNotificationController extends Controller
             'fcm_response' => $response->json()
         ]);
     }
+
+    public function index(Request $request){
+        return AdminNotification::where('user_id', $request->user()->id)
+            ->latest()
+            ->paginate(10);
+    }
+
+    public function show(Request $request, $id){
+        return AdminNotification::where('user_id', $request->user()->id)
+            ->findOrFail($id);
+    }
 }
