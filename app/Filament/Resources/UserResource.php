@@ -135,12 +135,18 @@ class UserResource extends Resource
                                 ]);
 
                             $messaging->send($message);
-                            AdminNotification::create([
-                                'user_id' => $record->id,
-                                'title' => $data['title'],
-                                'body' => $data['body'],
-                                'image' => $data['image'] ?? null,
-                            ]);
+                            try {
+                                AdminNotification::create([
+                                    'user_id' => $record->id,
+                                    'title' => $data['title'],
+                                    'content' => $data['body'],
+                                    'image' => $data['image'] ?? null,
+                                    'fcm_token' => $record->fcm_token,
+                                    'status' => 'sent',
+                                ]);
+                            } catch (\Throwable $dbError) {
+                                Log::error('DB Error (AdminNotification): ' . $dbError->getMessage());
+                            }
 
                             \Filament\Notifications\Notification::make()
                                 ->title("Notification sent to {$record->name}")
