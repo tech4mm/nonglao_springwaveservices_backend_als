@@ -16,6 +16,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\PasswordInput;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use App\Models\AdminNotification; // Ensure the AdminNotification model exists in this namespace
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Actions\Action;
 
@@ -138,6 +140,18 @@ class UserResource extends Resource
                         ];
 
                         $response = Http::post(route('fcm.send.from.admin', ['user' => $record->id]), $payload);
+                        try {
+                            AdminNotification::create([
+                                'user_id' => $record->id, // Use the record's ID directly
+                                'title' => $data['title'],
+                                'content' => $data['body'],
+                                'image' => $data['image'] ?? null,
+                                'fcm_token' => $record->fcm_token,
+                                'status' => $response->successful() ? 'sent' : 'failed',
+                            ]);
+                        } catch (\Exception $e) {
+                            Log::error('Notification DB error: ' . $e->getMessage());
+                        }
 
                         \Filament\Notifications\Notification::make()
                             ->title("Notification sent to {$record->name}")

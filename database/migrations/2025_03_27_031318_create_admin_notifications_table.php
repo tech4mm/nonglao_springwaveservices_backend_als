@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('admin_notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
-            $table->text('message')->nullable();
-            $table->string('image_url')->nullable(); // optional image
-            $table->boolean('is_read')->default(false);
+            $table->text('content');
+            $table->string('image')->nullable();
+            $table->string('fcm_token');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('admin_notifications');
     }
 };
