@@ -113,4 +113,6 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get('/notifications', [AdminNotificationController::class, 'index']);
     Route::get('/notifications/{id}', [AdminNotificationController::class, 'show']);
 
+    Route::delete('/delete-account', [ApiController::class, 'deleteAccount']);
+
 });

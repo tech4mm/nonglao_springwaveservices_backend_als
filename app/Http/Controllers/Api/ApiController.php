@@ -89,6 +89,52 @@ class ApiController extends Controller
         }
     }
 
+    public function deleteAccount(Request $request){
+        $user = $request->user();
+
+        // Delete related data if needed
+        // For example:
+        // $user->workerInfo()->delete();
+        // $user->passportDetail()->delete();
+        // etc...
+
+        // Delete the user account
+
+        if ($user->workerInfo) {
+            $user->workerInfo->delete();
+        }
+
+        if ($user->passportDetail) {
+            $user->passportDetail->delete();
+        }
+
+        if ($user->visaDetail) {
+            $user->visaDetail->delete();
+        }
+
+        if ($user->workPermitDetail) {
+            $user->workPermitDetail->delete();
+        }
+
+        if ($user->ninetyDayDetail) {
+            $user->ninetyDayDetail->delete();
+        }
+
+        if ($user->marriageCertificate) {
+            $user->marriageCertificate->delete();
+        }
+
+        if ($user->fcmToken) {
+            $user->fcmToken->delete();
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'message' => 'Your account and data have been deleted successfully.'
+        ]);
+    }
+
     // login
     public function login(Request $request){
         $request -> validate([
