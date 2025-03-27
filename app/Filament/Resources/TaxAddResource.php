@@ -34,7 +34,7 @@ class TaxAddResource extends Resource
 
     public static function getNavigationIcon(): ?string
     {
-        return 'heroicon-o-user-group'; // Icon (from Heroicons)
+        return 'heroicon-o-puzzle-piece'; // Icon (from Heroicons)
     }
 
     public static function form(Form $form): Form

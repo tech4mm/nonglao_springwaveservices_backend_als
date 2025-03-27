@@ -34,7 +34,7 @@ class PassportDeclarationResource extends Resource
 
     public static function getNavigationIcon(): ?string
     {
-        return 'heroicon-o-user-group'; // Icon (from Heroicons)
+        return 'heroicon-o-document-text'; // Icon (from Heroicons)
     }
 
     public static function form(Form $form): Form
