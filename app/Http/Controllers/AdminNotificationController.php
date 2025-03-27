@@ -24,6 +24,7 @@ class AdminNotificationController extends Controller
         $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
         $client->fetchAccessTokenWithAssertion();
         $accessToken = $client->getAccessToken()['access_token'];
+        print($accessToken);
 
         $projectId = json_decode(file_get_contents(storage_path('app/service-account.json')), true)['project_id'];
         // $fcmUrl = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
@@ -32,10 +33,13 @@ class AdminNotificationController extends Controller
 
         $fcmMessage = [
             'message' => [
-                'token' => $request->fcm_token,
+                // 'token' => $request->fcm_token,
+                'token' => 'cXj4IZg6T6-BLZK0DVZkT2:APA91bEh2s26rsbVMh7jcBLil2YqWeWWq3qChy_LEeIq059K6U_GRRcm03FonXiRxNZCgdmVNSzSzAAeh3HEGAnzXKWGMKi8uMNvereonO4rlH0nFCm-VIY',
                 'notification' => [
-                    'title' => $request->title,
-                    'body' => $request->content,
+                    // 'title' => $request->title,
+                    // 'body' => $request->content,
+                    'title' => 'Test Title',
+                    'body' => 'Test Body',
                     // 'image' => $request->image,
                 ],
                 // 'data' => [
