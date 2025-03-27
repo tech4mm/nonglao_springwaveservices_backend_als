@@ -42,13 +42,13 @@ class AdminNotificationController extends Controller
                     'body' => 'Test Body',
                     // 'image' => $request->image,
                 ],
-                // 'data' => [
-                //     'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                //     'status' => 'done',
-                //     'title' => $request->title,
-                //     'body' => $request->content,
-                //     'image' => $request->image,
-                // ]
+                'data' => [
+                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                    'status' => 'done',
+                    'title' => $request->title,
+                    'body' => $request->content,
+                    'image' => $request->image,
+                ]
             ]
         ];
 

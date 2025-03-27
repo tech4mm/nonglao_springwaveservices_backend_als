@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Log;
 use App\Models\AdminNotification; // Ensure the AdminNotification model exists in this namespace
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Actions\Action;
+use Kreait\Firebase\Contract\Messaging;
+use Illuminate\Support\Facades\App;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 
 class UserResource extends Resource
 {
@@ -119,49 +123,31 @@ class UserResource extends Resource
                             ->nullable(),
                     ])
                     ->action(function (array $data, User $record): void {
-                        if (!$record->fcm_token) {
+                        try {
+                            /** @var Messaging $messaging */
+                            $messaging = App::make(Messaging::class);
+
+                            $message = CloudMessage::withTarget('token', $record->fcm_token)
+                                ->withNotification(Notification::create($data['title'], $data['body']))
+                                ->withData([
+                                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                                    'image' => $data['image'] ?? '',
+                                ]);
+
+                            $messaging->send($message);
+
                             \Filament\Notifications\Notification::make()
-                                ->title("This user has no FCM token.")
+                                ->title("Notification sent to {$record->name}")
+                                ->success()
+                                ->send();
+                        } catch (\Throwable $e) {
+                            Log::error('FCM Error: ' . $e->getMessage());
+
+                            \Filament\Notifications\Notification::make()
+                                ->title("Failed to send notification.")
                                 ->danger()
                                 ->send();
-                            return;
                         }
-
-                        $payload = [
-                            'to' => $record->fcm_token,
-                            'notification' => [
-                                'title' => $data['title'],
-                                'body' => $data['body'],
-                                'image' => $data['image'] ?? null,
-                            ],
-                            'data' => [
-                                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                            ],
-                        ];
-
-                        $response = Http::post(route('fcm.send.from.admin', ['user' => $record->id]), $payload);
-                        Log::info('FCM Response', [
-                            'status' => $response->status(),
-                            'body' => $response->body()
-                        ]);
-                        //dd($response);
-                        // try {
-                        //     AdminNotification::create([
-                        //         'user_id' => $record->id, // Use the record's ID directly
-                        //         'title' => $data['title'],
-                        //         'content' => $data['body'],
-                        //         'image' => $data['image'] ?? null,
-                        //         'fcm_token' => $record->fcm_token,
-                        //         'status' => $response->successful() ? 'sent' : 'failed',
-                        //     ]);
-                        // } catch (\Exception $e) {
-                        //     Log::error('Notification DB error: ' . $e->getMessage());
-                        // }
-
-                        // \Filament\Notifications\Notification::make()
-                        //     ->title("Notification sent to {$record->name}")
-                        //     ->success()
-                        //     ->send();
                     })
                     ->modalHeading('Send FCM Notification')
                     ->requiresConfirmation(),
