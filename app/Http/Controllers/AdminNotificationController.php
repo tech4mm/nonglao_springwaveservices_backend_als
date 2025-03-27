@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\AdminNotification;
+use Google\Client as GoogleClient;
+use Illuminate\Support\Facades\Storage;
 
 class AdminNotificationController extends Controller
 {
@@ -17,25 +19,35 @@ class AdminNotificationController extends Controller
             'fcm_token' => 'required|string'
         ]);
 
-        $fcmData = [
-            'to' => $request->fcm_token,
-            'notification' => [
-                'title' => $request->title,
-                'body' => $request->content,
-                'image' => $request->image,
-                'sound' => 'default'
-            ],
-            'data' => [
-                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                'status' => 'done',
-                'title' => $request->title,
-                'body' => $request->content,
-                'image' => $request->image,
+        $client = new GoogleClient();
+        $client->setAuthConfig(storage_path('app/service-account.json'));
+        $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
+        $client->fetchAccessTokenWithAssertion();
+        $accessToken = $client->getAccessToken()['access_token'];
+
+        $projectId = json_decode(file_get_contents(storage_path('app/service-account.json')), true)['project_id'];
+        $fcmUrl = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
+
+        $fcmMessage = [
+            'message' => [
+                'token' => $request->fcm_token,
+                'notification' => [
+                    'title' => $request->title,
+                    'body' => $request->content,
+                    'image' => $request->image,
+                ],
+                'data' => [
+                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                    'status' => 'done',
+                    'title' => $request->title,
+                    'body' => $request->content,
+                    'image' => $request->image,
+                ]
             ]
         ];
 
-        $response = Http::withToken(env('FCM_SERVER_KEY'))
-            ->post('https://fcm.googleapis.com/fcm/send', $fcmData);
+        $response = Http::withToken($accessToken)
+            ->post($fcmUrl, $fcmMessage);
 
         AdminNotification::create([
             'user_id' => $request->user_id, // or $request->user()->id if using auth

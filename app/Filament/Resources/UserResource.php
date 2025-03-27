@@ -140,6 +140,7 @@ class UserResource extends Resource
                         ];
 
                         $response = Http::post(route('fcm.send.from.admin', ['user' => $record->id]), $payload);
+                        //dd($response);
                         try {
                             AdminNotification::create([
                                 'user_id' => $record->id, // Use the record's ID directly
