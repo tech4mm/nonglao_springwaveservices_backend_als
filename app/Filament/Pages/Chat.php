@@ -13,6 +13,10 @@ class Chat extends Page
     //protected static ?string $navigationIcon = 'heroicon-o-chat-alt-2';
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
     protected static string $view = 'filament.pages.chat';
+     public static function getNavigationSort(): ?int
+    {
+        return 3; // Sorting order (lower values appear first)
+    }
 
     public string $newMessage = '';
     public ?int $receiverId = null;
@@ -54,7 +58,7 @@ class Chat extends Page
         Message::create([
             'sender_id' => $this->authUserId,
             'receiver_id' => $this->receiverId,
-            'message' => $this->newMessage,
+            'message' => (string) asset('storage/' . $this->newMessage),
         ]);
 
         $this->newMessage = '';

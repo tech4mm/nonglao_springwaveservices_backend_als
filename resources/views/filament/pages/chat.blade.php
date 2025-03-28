@@ -1,7 +1,8 @@
 <x-filament::page>
     <div class="flex w-full h-[600px] bg-white shadow overflow-hidden">
         <!-- User List -->
-        <div class="w-1/3 border-r overflow-y-auto">
+        <div class="w-1/3 border-r">
+            <div>
             <div class="p-4 font-semibold border-b">Users</div>
             <div class="p-2">
                 <input type="text" wire:model.debounce.300ms="search"
@@ -28,12 +29,14 @@
                     </span>
                 </div>
             @endforeach
+            </div>
+
         </div>
 
         <!-- Chat Section -->
-        <div class="flex flex-col flex-1 h-[600px] overflow-hidden">
+        <div class="flex flex-col flex-1 h-full overflow-hidden">
             <!-- Message List -->
-            <div class="flex-1 overflow-y-auto p-4 space-y-2" wire:poll.1s>
+            <div class="overflow-y-auto p-4 space-y-2 flex-1" wire:poll.1s>
                 @foreach ($this->messages as $message)
                     @if ($message->sender_id === $authUserId)
                         <div class="flex items-start gap-2 justify-end">
@@ -77,18 +80,32 @@
                     @endif
                 @endforeach
             </div>
-
-            <!-- Input Bar -->
-            <div class="shrink-0 bg-white p-4 border-t flex items-center gap-2">
-                <input type="text" wire:model.defer="newMessage"
-                       wire:keydown.enter="sendMessage"
-                       placeholder="Type your message..."
-                       class="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-300">
-                <button wire:click="sendMessage"
-                        class="bg-blue-600 text-black px-4 py-2 rounded-full hover:bg-blue-700">
-                    Send
-                </button>
-            </div>
         </div>
     </div>
+            <!-- Input Bar -->
+            <div class="fixed bottom-0 left-1/3 w-2/3 bg-white p-4 rounded-xl shadow-md border border-gray-200 flex flex-wrap items-center gap-2 z-10">
+                <!-- File Upload Button -->
+                <label class="cursor-pointer bg-gray-100 px-3 py-2 rounded-full hover:bg-gray-200 text-sm text-gray-700">
+                    📎
+                    <input type="file" class="hidden" wire:model="file" wire:change="uploadFile" />
+                </label>
+
+                <!-- Message Input -->
+                <input type="text" wire:model.defer="newMessage"
+                    wire:keydown.enter="sendMessage"
+                    placeholder="Type your message..."
+                    class="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring focus:border-blue-300">
+
+                <!-- Send Notification Button -->
+                {{-- <button wire:click="sendNotification"
+                        class="bg-yellow-400 text-black px-4 py-2 rounded-full hover:bg-yellow-500">
+                    🔔
+                </button> --}}
+
+                <button wire:click="sendMessage"
+                    class="bg-blue-600 text-black p-2 rounded-full hover:bg-blue-700 transition duration-150"
+                    title="Send">
+                    <x-heroicon-s-paper-airplane class="w-5 h-5 transform rotate-45" />
+                </button>
+            </div>
 </x-filament::page>
