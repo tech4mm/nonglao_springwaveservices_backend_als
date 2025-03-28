@@ -8,3 +8,8 @@ under -> storage/app/public/images/logo.jpg (if there is no images folder create
 php artisan migrate:rollback --step=1
 php artisan migrate
 
+<x-filament-widgets::widget>
+    <x-filament::section>
+        {{-- Widget content --}}
+    </x-filament::section>
+</x-filament-widgets::widget>
