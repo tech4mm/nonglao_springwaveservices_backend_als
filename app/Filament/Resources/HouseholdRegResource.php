@@ -19,7 +19,7 @@ class HouseholdRegResource extends Resource
 
    public static function getNavigationLabel(): string
     {
-        return 'Household Registration'; // Custom text
+        return 'Household Certificate'; // Custom text
     }
 
     public static function getNavigationGroup(): ?string

@@ -19,7 +19,7 @@ class RegistrationInfoResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'Registration Information'; // Custom text
+        return 'NRC Information ‌'; // Custom text
     }
 
     public static function getNavigationGroup(): ?string
