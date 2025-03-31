@@ -101,4 +101,25 @@ public function ninetyDayInfo()
 {
     return $this->hasOne(NinetyDayInfo::class);
 }
+
+    public function passport()
+{
+    return $this->hasOne(\App\Models\PassportDetail::class);
+}
+
+public function visa()
+{
+    return $this->hasOne(\App\Models\VisaDetail::class);
+}
+
+public function workPermit()
+{
+    return $this->hasOne(\App\Models\WorkPermitDetail::class);
+}
+
+public function ninetyDay()
+{
+    return $this->hasOne(\App\Models\NinetyDayInfo::class);
+}
+
 }

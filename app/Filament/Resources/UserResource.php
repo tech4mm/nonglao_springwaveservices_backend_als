@@ -114,6 +114,30 @@ class UserResource extends Resource
                     ->label('Status')
                     ->sortable()
                     ->searchable(),
+
+                TextColumn::make('passport.passport_expire_date')
+                    ->label('Passport Expire')
+                    ->date()
+                    ->sortable(),
+
+                TextColumn::make('visa.visa_expire_date')
+                    ->label('Visa Expire')
+                    ->date()
+                    ->sortable(),
+
+                TextColumn::make('workPermit.work_permit_expire_date')
+                    ->label('Work Permit Expire')
+                    ->date()
+                    ->sortable(),
+
+                TextColumn::make('ninetyDay.expire_date')
+                    ->label('90-Day Report Expire')
+                    ->date()
+                    ->sortable(),
+                // TextColumn::make('passport_expire_date')->label('Passport Expire')->date(),
+                // TextColumn::make('visa_expire_date')->label('Visa Expire')->date(),
+                // TextColumn::make('work_permit_expire_date')->label('Work Permit Expire')->date(),
+                // TextColumn::make('ninety_day_report_expire_date')->label('90-Day Report Expire')->date(),
                 //TextColumn::make('tax_payer_number')->label('Taxpayer Number')->sortable()->searchable(),
                 //TextColumn::make('updated_at')->sortable(),
             ])
@@ -121,8 +145,8 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                //Tables\Actions\EditAction::make(),
+                //Tables\Actions\DeleteAction::make(),
                 Action::make('Send Notification')
                     ->icon('heroicon-o-paper-airplane')
                     ->form([
