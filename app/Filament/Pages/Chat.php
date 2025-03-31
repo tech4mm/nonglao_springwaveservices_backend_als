@@ -13,6 +13,7 @@ use Kreait\Firebase\Messaging\CloudMessage; // Import CloudMessage from Firebase
 use Kreait\Firebase\Messaging\Notification; // Import Notification from Firebase SDK
 use App\Models\AdminNotification; // Import AdminNotification model
 use Illuminate\Support\Facades\Log; // Import Log facade
+use Kreait\Firebase\Factory;
 
 class Chat extends Page
 {
@@ -61,57 +62,64 @@ class Chat extends Page
     {
         if (!$this->receiverId || !$this->newMessage) return;
 
+        $messageText = $this->newMessage;
+
         Message::create([
             'sender_id' => $this->authUserId,
             'receiver_id' => $this->receiverId,
-            'message' =>  $this->newMessage,
+            'message' => $messageText,
         ]);
 
-        $this->newMessage = '';
         $this->loadMessages();
-
 
         // Optionally, you can also send a notification to the receiver
         try {
-                            /** @var Messaging $messaging */
-                            $messaging = App::make(Messaging::class);
+            $messaging = (new Factory)
+                ->withServiceAccount(storage_path('app/firebase/firebase_credentials.json'))
+                ->createMessaging();
 
-                            $receiver = User::find($this->receiverId);
-                            if (!$receiver || !$receiver->fcm_token) {
-                                throw new \Exception('Receiver or FCM token not found.');
-                            }
-                            $message = CloudMessage::withTarget('token', $receiver->fcm_token)
-                                ->withNotification(Notification::create('chat', $this->newMessage))
-                                ->withData([
-                                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                                    'image' => $data['image'] ?? '',
-                                ]);
+            $receiver = User::find($this->receiverId);
+            if (!$receiver || !$receiver->fcm_token) {
+                throw new \Exception('Receiver or FCM token not found.');
+            }
 
-                            $messaging->send($message);
-                            try {
-                                AdminNotification::create([
-                                    'user_id' => $receiver->id,
-                                    'title' => $this->newMessage,
-                                    'content' => $this->newMessage,
-                                    'image' => null,
-                                    'fcm_token' => $receiver->fcm_token,
-                                    'status' => 'sent',
-                                ]);
-                            } catch (\Throwable $dbError) {
-                                Log::error('DB Error (AdminNotification): ' . $dbError->getMessage());
-                            }
+            $notification = Notification::create('New Message', $messageText);
 
-                            \Filament\Notifications\Notification::make()
-                                ->title("Notification sent to {$receiver->name}")
-                                ->success()
-                                ->send();
-                        } catch (\Throwable $e) {
-                            Log::error('FCM Error: ' . $e->getMessage());
+            $message = CloudMessage::withTarget('token', $receiver->fcm_token)
+                ->withNotification($notification)
+                ->withData([
+                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                    'image' => '',
+                ]);
 
-                            \Filament\Notifications\Notification::make()
-                                ->title("Failed to send notification.")
-                                ->danger()
-                                ->send();
-                        }
+            $messaging->send($message);
+
+            try {
+                AdminNotification::create([
+                    'user_id' => $receiver->id,
+                    'title' => $messageText,
+                    'content' => $messageText,
+                    'image' => null,
+                    'fcm_token' => $receiver->fcm_token,
+                    'status' => 'sent',
+                ]);
+            } catch (\Throwable $dbError) {
+                Log::error('DB Error (AdminNotification): ' . $dbError->getMessage());
+            }
+
+            \Filament\Notifications\Notification::make()
+                ->title("Notification sent to {$receiver->name}")
+                ->success()
+                ->send();
+        } catch (\Throwable $e) {
+            Log::error('FCM Error: ' . $e->getMessage());
+
+            \Filament\Notifications\Notification::make()
+                ->title("Failed to send notification: " . $e->getMessage())
+                ->danger()
+                ->send();
+        }
+
+        $this->newMessage = '';
     }
 }
