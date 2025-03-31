@@ -19,7 +19,7 @@ class UidReqResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'UID Requirements'; // Custom text
+        return 'UID Information'; // Custom text
     }
 
     public static function getNavigationGroup(): ?string

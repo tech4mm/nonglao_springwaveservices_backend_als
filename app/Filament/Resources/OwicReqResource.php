@@ -19,7 +19,7 @@ class OwicReqResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'OWIC Requirements'; // Custom text
+        return 'OWIC Information'; // Custom text
     }
 
     public static function getNavigationGroup(): ?string

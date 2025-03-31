@@ -19,7 +19,7 @@ class TaxAddResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'Tax Add'; // Custom text
+        return 'Tax Payment Information'; // Custom text
     }
 
     public static function getNavigationGroup(): ?string
