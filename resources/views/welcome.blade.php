@@ -72,7 +72,7 @@
 </main>
 
 <footer>
-    &copy; {{ date('Y') }} Tech4M. All rights reserved.
+    &copy; {{ date('Y') }} Spring Wave Services. All rights reserved.
 </footer>
 
 </body>
