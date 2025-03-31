@@ -26,10 +26,10 @@ class BannerTextResource extends Resource
         return $form
             ->schema([
                 //
-                Textarea::make('e_body')->label('English Body')->required(),
-                Textarea::make('m_body')->label('Myanmar Body')->required(),
-                Textarea::make('t_body')->label('Thai Body')->required(),
-                Textarea::make('s_body')->label('Sundanese Body')->required(),
+                Textarea::make('e_body')->label('English')->required(),
+                Textarea::make('m_body')->label('Myanmar')->required(),
+                Textarea::make('t_body')->label('Thai')->required(),
+                Textarea::make('s_body')->label('Sham')->required(),
             ]);
     }
 
