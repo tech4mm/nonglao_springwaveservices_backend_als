@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('tech4mm')
             ->login()
                 ->brandLogo(asset('images/logo.png')) // Custom Logo
-                ->brandLogoHeight('90px') // Adjust height
+                ->brandLogoHeight('60px') // Adjust height
                 ->favicon(asset('images/logo.png')) // Custom Favicon
                 ->colors([
                 'primary' => '#00a86b', // Custom primary color
