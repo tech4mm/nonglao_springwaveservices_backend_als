@@ -8,6 +8,10 @@ use App\Http\Controllers\FCMController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/download-apk', function () {
+    $filePath = public_path('apk/app-release.apk'); // make sure the path is correct
+    return response()->download($filePath, 'app-release.apk');
+})->name('download.apk');
 
 // Route::middleware(['web', 'auth']) // Admin login required
 //     ->get('/send-notification/{user}', [NotificationController::class, 'send'])
