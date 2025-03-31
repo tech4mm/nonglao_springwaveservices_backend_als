@@ -13,10 +13,34 @@ use Kreait\Firebase\Messaging\CloudMessage; // Import CloudMessage from Firebase
 use Kreait\Firebase\Messaging\Notification; // Import Notification from Firebase SDK
 use App\Models\AdminNotification; // Import AdminNotification model
 use Illuminate\Support\Facades\Log; // Import Log facade
+use Illuminate\Support\Facades\Storage; // Import Storage facade
 use Kreait\Firebase\Factory;
+use Livewire\WithFileUploads;
+use Livewire\WithValidation;
 
 class Chat extends Page
 {
+     use WithFileUploads;
+     public $file;
+        public function uploadFile(){
+            if ($this->file) {
+                // $this->validate([
+                //     'file' => 'file|max:10240', // max 10MB
+                // ]);
+
+                $path = $this->file->store('chat_uploads', 'public');
+                $url = Storage::disk('public')->url($path);
+
+                Message::create([
+                    'sender_id' => $this->authUserId,
+                    'receiver_id' => $this->receiverId,
+                    'message' => '📎 File: <a href="' . $url . '" target="_blank">View File</a>',
+                ]);
+
+                $this->loadMessages();
+                $this->file = null;
+            }
+        }
     //protected static ?string $navigationIcon = 'heroicon-o-chat-alt-2';
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
     protected static string $view = 'filament.pages.chat';

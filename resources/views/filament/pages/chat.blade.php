@@ -85,9 +85,13 @@
             <!-- Input Bar -->
             <div class="fixed bottom-0 left-1/3 w-2/3 bg-white p-4 rounded-xl shadow-md border border-gray-200 flex flex-wrap items-center gap-2 z-10">
                 <!-- File Upload Button -->
-                <label class="cursor-pointer bg-gray-100 px-3 py-2 rounded-full hover:bg-gray-200 text-sm text-gray-700">
+                {{-- <label class="cursor-pointer bg-gray-100 px-3 py-2 rounded-full hover:bg-gray-200 text-sm text-gray-700">
                     📎
                     <input type="file" class="hidden" wire:model="file" wire:change="uploadFile" />
+                </label> --}}
+                <label class="cursor-pointer bg-gray-100 px-3 py-2 rounded-full hover:bg-gray-200 text-sm text-gray-700">
+                    📎
+                    <input type="file" class="hidden" wire:model="file" wire:change="uploadFile">
                 </label>
 
                 <!-- Message Input -->
