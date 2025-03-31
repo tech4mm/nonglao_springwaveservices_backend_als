@@ -58,7 +58,7 @@ class Chat extends Page
         Message::create([
             'sender_id' => $this->authUserId,
             'receiver_id' => $this->receiverId,
-            'message' => (string) asset('storage/' . $this->newMessage),
+            'message' =>  $this->newMessage,
         ]);
 
         $this->newMessage = '';
