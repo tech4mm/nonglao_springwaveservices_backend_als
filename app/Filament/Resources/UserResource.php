@@ -134,12 +134,6 @@ class UserResource extends Resource
                     ->label('90-Day Report Expire')
                     ->date()
                     ->sortable(),
-                // TextColumn::make('passport_expire_date')->label('Passport Expire')->date(),
-                // TextColumn::make('visa_expire_date')->label('Visa Expire')->date(),
-                // TextColumn::make('work_permit_expire_date')->label('Work Permit Expire')->date(),
-                // TextColumn::make('ninety_day_report_expire_date')->label('90-Day Report Expire')->date(),
-                //TextColumn::make('tax_payer_number')->label('Taxpayer Number')->sortable()->searchable(),
-                //TextColumn::make('updated_at')->sortable(),
             ])
             ->filters([
                 //
