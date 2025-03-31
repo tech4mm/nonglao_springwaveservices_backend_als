@@ -64,7 +64,7 @@ class SendAllUsersNotification extends Page implements HasForms
         $accessToken = $client->fetchAccessTokenWithAssertion()['access_token'];
 
         foreach ($users as $user) {
-            Http::withToken($accessToken)->post('https://fcm.googleapis.com/v1/projects/spring-wave-a2661/messages:send', [
+            Http::withToken($accessToken)->post('https://fcm.googleapis.com/v1/projects/nonglao-5d4b4/messages:send', [
                 'message' => [
                     'token' => $user->fcm_token,
                     'notification' => [
