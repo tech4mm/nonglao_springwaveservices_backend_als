@@ -9,17 +9,18 @@ class MessageFileController extends Controller
 {
     //
     public function upload(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|file|max:10240', // max 10MB
-        ]);
+{
+    $request->validate([
+        'file' => 'required|file|max:10240',
+    ]);
 
-        $path = $request->file('file')->store('messages');
+    // Store under public disk so it goes to storage/app/public/messages
+    $path = $request->file('file')->store('messages', 'public');
 
-        return response()->json([
-            'success' => true,
-            'path' => $path,
-            'url' => Storage::url($path),
-        ]);
-    }
+    return response()->json([
+        'success' => true,
+        'path' => $path,
+        'url' => asset('storage/' . $path),
+    ]);
+}
 }
