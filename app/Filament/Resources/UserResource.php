@@ -84,6 +84,15 @@ class UserResource extends Resource
                     'Other' => 'Other',
                 ])
                 ->nullable(),
+
+            Forms\Components\Select::make('status')
+                ->label('Status')
+                ->options([
+                    'approved' => 'Approved',
+                    'pending' => 'Pending',
+                ])
+                ->default('pending'),
+
             Forms\Components\DatePicker::make('date_of_birth')->label('Date of Birth')->nullable(),
             TextInput::make('registration_number')->label('Registration Number')->nullable(),
             TextInput::make('uid_number')->label('UID Number')->nullable(),
@@ -101,8 +110,12 @@ class UserResource extends Resource
                 TextColumn::make('id')->sortable()->searchable(),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('phone')->sortable()->searchable(),
-                TextColumn::make('tax_payer_number')->label('Taxpayer Number')->sortable()->searchable(),
-                TextColumn::make('updated_at')->sortable(),
+                TextColumn::make('status')
+                    ->label('Status')
+                    ->sortable()
+                    ->searchable(),
+                //TextColumn::make('tax_payer_number')->label('Taxpayer Number')->sortable()->searchable(),
+                //TextColumn::make('updated_at')->sortable(),
             ])
             ->filters([
                 //
@@ -186,4 +199,5 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
 }
