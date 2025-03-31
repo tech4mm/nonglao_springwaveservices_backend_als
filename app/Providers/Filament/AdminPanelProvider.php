@@ -33,7 +33,8 @@ class AdminPanelProvider extends PanelProvider
                 ->brandLogoHeight('60px') // Adjust height
                 ->favicon(asset('images/logo.png')) // Custom Favicon
                 ->colors([
-                'primary' => '#00a86b', // Custom primary color
+                'primary' => '#00a86b', // Custom primary for demo.springwaveservices.com
+                'primary' => '#ff00cc',
             ])
 
            ->navigationGroups([
