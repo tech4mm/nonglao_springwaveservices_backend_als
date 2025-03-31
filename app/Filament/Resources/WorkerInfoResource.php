@@ -42,13 +42,6 @@ class WorkerInfoResource extends Resource
     {
         return $form
             ->schema([
-                //
-                // Forms\Components\Select::make('user_id')
-                // ->label('User')
-                // ->relationship('user', 'name')
-                // ->searchable()
-                // ->preload()
-                // ->required(),
                 Forms\Components\Select::make('user_id')
                     ->label('User')
                     ->relationship('user', 'name')
