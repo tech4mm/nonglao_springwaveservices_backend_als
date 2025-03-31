@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('banner_texts', function (Blueprint $table) {
             $table->id();
             $table->text('e_body');
-        $table->text('m_body');
-        $table->text('t_body');
-        $table->text('s_body');
+            $table->text('m_body');
+            $table->text('t_body');
+            $table->text('s_body');
             $table->timestamps();
         });
     }

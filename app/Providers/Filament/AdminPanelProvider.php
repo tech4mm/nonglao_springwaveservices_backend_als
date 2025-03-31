@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\ChatWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -17,6 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\NavigationGroup;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -27,30 +29,29 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('tech4mm')
             ->login()
-            // ->colors([
-            //     'primary' => Color::Amber,
-            // ])
-
-            // my code
-
-                ->brandLogo(asset('storage/images/logo.jpg')) // Custom Logo
-                ->brandLogoHeight('50px') // Adjust height
-                //->favicon(asset('images/logo.jpg')) // Custom Favicon
+                ->brandLogo(asset('images/logo.png')) // Custom Logo
+                ->brandLogoHeight('90px') // Adjust height
+                ->favicon(asset('images/logo.png')) // Custom Favicon
                 ->colors([
-                'primary' => '#FA03CD', // Custom primary color
+                'primary' => '#00a86b', // Custom primary color
             ])
 
-            // end my code
-
+           ->navigationGroups([
+                NavigationGroup::make('Admin Panel'),
+                NavigationGroup::make('Requirements'),
+                NavigationGroup::make('Info Panel'),
+                NavigationGroup::make('Recommendation Letter'),
+                NavigationGroup::make('Others'),
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 // we hide dashboard tab in admin panel
-                //Pages\Dashboard::class,
+                // Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-
+                // ChatWidget::class,
                 // widgets in admin dashboard
                 //Widgets\AccountWidget::class,
                 //Widgets\FilamentInfoWidget::class,

@@ -16,8 +16,14 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\PasswordInput;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use App\Models\AdminNotification; // Ensure the AdminNotification model exists in this namespace
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Actions\Action;
+use Kreait\Firebase\Contract\Messaging;
+use Illuminate\Support\Facades\App;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 
 class UserResource extends Resource
 {
@@ -60,7 +66,6 @@ class UserResource extends Resource
                 ->label('Phone'),
 
             TextInput::make('email')
-                ->required()
                 ->email()
                 ->unique(ignoreRecord: true)
                 ->label('Email'),
@@ -69,6 +74,21 @@ class UserResource extends Resource
                 ->password() // Use password method here
                 ->label('Password')
                 ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
+
+            TextInput::make('passport_number')->label('Passport Number')->nullable(),
+            Forms\Components\Select::make('gender')
+                ->label('Gender')
+                ->options([
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                    'Other' => 'Other',
+                ])
+                ->nullable(),
+            Forms\Components\DatePicker::make('date_of_birth')->label('Date of Birth')->nullable(),
+            TextInput::make('registration_number')->label('Registration Number')->nullable(),
+            TextInput::make('uid_number')->label('UID Number')->nullable(),
+            TextInput::make('taxpayer_number')->label('Taxpayer Number')->nullable(),
+            TextInput::make('owic_number')->label('OWIC Number')->nullable(),
 
             ]);
     }
@@ -81,6 +101,7 @@ class UserResource extends Resource
                 TextColumn::make('id')->sortable()->searchable(),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('phone')->sortable()->searchable(),
+                TextColumn::make('tax_payer_number')->label('Taxpayer Number')->sortable()->searchable(),
                 TextColumn::make('updated_at')->sortable(),
             ])
             ->filters([
@@ -102,33 +123,43 @@ class UserResource extends Resource
                             ->nullable(),
                     ])
                     ->action(function (array $data, User $record): void {
-                        if (!$record->fcm_token) {
+                        try {
+                            /** @var Messaging $messaging */
+                            $messaging = App::make(Messaging::class);
+
+                            $message = CloudMessage::withTarget('token', $record->fcm_token)
+                                ->withNotification(Notification::create($data['title'], $data['body']))
+                                ->withData([
+                                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                                    'image' => $data['image'] ?? '',
+                                ]);
+
+                            $messaging->send($message);
+                            try {
+                                AdminNotification::create([
+                                    'user_id' => $record->id,
+                                    'title' => $data['title'],
+                                    'content' => $data['body'],
+                                    'image' => $data['image'] ?? null,
+                                    'fcm_token' => $record->fcm_token,
+                                    'status' => 'sent',
+                                ]);
+                            } catch (\Throwable $dbError) {
+                                Log::error('DB Error (AdminNotification): ' . $dbError->getMessage());
+                            }
+
                             \Filament\Notifications\Notification::make()
-                                ->title("This user has no FCM token.")
+                                ->title("Notification sent to {$record->name}")
+                                ->success()
+                                ->send();
+                        } catch (\Throwable $e) {
+                            Log::error('FCM Error: ' . $e->getMessage());
+
+                            \Filament\Notifications\Notification::make()
+                                ->title("Failed to send notification.")
                                 ->danger()
                                 ->send();
-                            return;
                         }
-
-                        $payload = [
-                            'to' => $record->fcm_token,
-                            'notification' => [
-                                'title' => $data['title'],
-                                'body' => $data['body'],
-                                'image' => $data['image'] ?? null,
-                            ],
-                            'data' => [
-                                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-                            ],
-                        ];
-
-                        Http::withToken(env('FCM_SERVER_KEY'))
-                            ->post('https://fcm.googleapis.com/fcm/send', $payload);
-
-                        \Filament\Notifications\Notification::make()
-                            ->title("Notification sent to {$record->name}")
-                            ->success()
-                            ->send();
                     })
                     ->modalHeading('Send FCM Notification')
                     ->requiresConfirmation(),

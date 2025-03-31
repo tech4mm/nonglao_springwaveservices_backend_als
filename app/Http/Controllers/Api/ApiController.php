@@ -8,6 +8,11 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Composer\Autoload\ClassLoader;
 use PhpParser\Node\Stmt\TryCatch;
+use App\Models\RegistrationInfo;
+use App\Models\HouseholdReg;
+use App\Models\UidReq;
+use App\Models\TaxAdd;
+use App\Models\OwicReq;
 
 // require_once('vendor/autoload.php');
 
@@ -84,6 +89,52 @@ class ApiController extends Controller
         }
     }
 
+    public function deleteAccount(Request $request){
+        $user = $request->user();
+
+        // Delete related data if needed
+        // For example:
+        // $user->workerInfo()->delete();
+        // $user->passportDetail()->delete();
+        // etc...
+
+        // Delete the user account
+
+        if ($user->workerInfo) {
+            $user->workerInfo->delete();
+        }
+
+        if ($user->passportDetail) {
+            $user->passportDetail->delete();
+        }
+
+        if ($user->visaDetail) {
+            $user->visaDetail->delete();
+        }
+
+        if ($user->workPermitDetail) {
+            $user->workPermitDetail->delete();
+        }
+
+        if ($user->ninetyDayDetail) {
+            $user->ninetyDayDetail->delete();
+        }
+
+        if ($user->marriageCertificate) {
+            $user->marriageCertificate->delete();
+        }
+
+        if ($user->fcmToken) {
+            $user->fcmToken->delete();
+        }
+
+        $user->delete();
+
+        return response()->json([
+            'message' => 'Your account and data have been deleted successfully.'
+        ]);
+    }
+
     // login
     public function login(Request $request){
         $request -> validate([
@@ -117,6 +168,33 @@ class ApiController extends Controller
         }
     }
 
+    public function get_register_info(){
+        $data = RegistrationInfo::where('user_id', auth()->id())->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    public function get_owic_req(){
+        $data = OwicReq::where('user_id', auth()->id())->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    public function get_household_reg(){
+        $data = HouseholdReg::where('user_id', auth()->id())->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
     // get profile
     public function profile(){
         $userdata = auth()->user();
@@ -124,6 +202,51 @@ class ApiController extends Controller
             'status' => true,
             'message' => 'User data',
             'data' =>  $userdata,
+        ]);
+    }
+
+    public function get_tax_payer_number(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'success' => true,
+            'tax_payer_number' => $user->tax_payer_number,
+        ]);
+    }
+
+    public function set_tax_payer_number(Request $request)
+    {
+        $validated = $request->validate([
+            'tax_payer_number' => 'required|string|max:255',
+        ]);
+
+        $user = $request->user();
+        $user->tax_payer_number = $validated['tax_payer_number'];
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Tax payer number updated successfully',
+        ]);
+    }
+
+    public function get_uid_req(){
+        $data = UidReq::where('user_id', auth()->id())->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
+    public function get_tax_list()
+    {
+        $data = TaxAdd::where('user_id', auth()->id())->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
         ]);
     }
 
@@ -170,6 +293,23 @@ class ApiController extends Controller
         ]);
     }
 
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = $request->user();
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        // Logout (delete all tokens)
+        $user->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Password changed successfully. Please log in again.',
+        ]);
+    }
 
     // otp_forgot_password
     public function otp_forgot_password(Request $request){
@@ -279,4 +419,6 @@ class ApiController extends Controller
             'message' => 'Logout successfully',
         ]);
     }
+
+
 }

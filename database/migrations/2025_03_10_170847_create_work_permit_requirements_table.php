@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('work_permit_requirements', function (Blueprint $table) {
             $table->id();
             $table->string('e_title');
-        $table->text('e_body');
-        $table->string('m_title');
-        $table->text('m_body');
-        $table->string('t_title');
-        $table->text('t_body');
-        $table->string('s_title');
-        $table->text('s_body');
-        $table->boolean('type');
+            $table->text('e_body');
+            $table->string('m_title');
+            $table->text('m_body');
+            $table->string('t_title');
+            $table->text('t_body');
+            $table->string('s_title');
+            $table->text('s_body');
+            $table->boolean('type');
             $table->timestamps();
         });
     }

@@ -84,6 +84,7 @@ class PassportDetailResource extends Resource
                     'Female' => 'Female',
                     'Other' => 'Other',
                 ])
+                ->native(false)
                 ->required(),
 
             Forms\Components\DatePicker::make('date_of_birth')
@@ -94,6 +95,9 @@ class PassportDetailResource extends Resource
                 ->maxLength(255),
 
             Forms\Components\DatePicker::make('date_of_issue')
+                ->required(),
+            Forms\Components\DatePicker::make('passport_expire_date')
+                ->label('Passport Expiry Date')
                 ->required(),
 
             Forms\Components\TextInput::make('place_of_issue')

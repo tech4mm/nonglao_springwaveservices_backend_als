@@ -32,7 +32,15 @@ class User extends Authenticatable implements FilamentUser
         'email',
         'password',
         'otp_code',
-        'user_picture'
+        'user_picture',
+        'passport_number',
+        'gender',
+        'date_of_birth',
+        'registration_number',
+        'uid_number',
+        'taxpayer_number',
+        'owic_number',
+        'tax_payer_number',
     ];
     // public function getUserPictureAttribute($value){
     //     return $value ? 'storage/' . $value : null;
@@ -72,4 +80,24 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasOne(WorkerInfo::class);
     }
+
+    public function passportDetail()
+{
+    return $this->hasOne(PassportDetail::class);
+}
+
+public function visaDetail()
+{
+    return $this->hasOne(VisaDetail::class);
+}
+
+public function workPermitDetail()
+{
+    return $this->hasOne(WorkPermitDetail::class);
+}
+
+public function ninetyDayInfo()
+{
+    return $this->hasOne(NinetyDayInfo::class);
+}
 }
