@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\MarriageCertificateController;
 use App\Http\Controllers\Api\FcmTokenController;
 use App\Http\Controllers\Api\ExpireInfoController;
 use App\Http\Controllers\AdminNotificationController;
+use App\Http\Controllers\MessageFileController;
 use App\Http\Controllers\Api\ChatController;
 use App\Models\ReportLiveInThRequirement;
 use App\Models\RecommendationLetterBanner;
@@ -120,4 +121,6 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
 
     Route::post('/chat/send', [ChatController::class, 'sendMessage']);
     Route::get('/chat/messages', [ChatController::class, 'getMessages']);
+
+    Route::post('/upload-message-file', [MessageFileController::class, 'upload']);
 });
