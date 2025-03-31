@@ -8,9 +8,17 @@ use App\Http\Controllers\FCMController;
 Route::get('/', function () {
     return view('welcome');
 });
+// Route::get('/download-apk', function () {
+//     $filePath = public_path('apk/app-release.apk'); // make sure the path is correct
+//     return response()->download($filePath, 'app-release.apk');
+// })->name('download.apk');
+
 Route::get('/download-apk', function () {
-    $filePath = public_path('apk/app-release.apk'); // make sure the path is correct
-    return response()->download($filePath, 'app-release.apk');
+    $filePath = public_path('apk/app-release.apk');
+
+    return response()->download($filePath, 'app-release.apk', [
+        'Content-Type' => 'application/vnd.android.package-archive'
+    ]);
 })->name('download.apk');
 
 // Route::middleware(['web', 'auth']) // Admin login required
