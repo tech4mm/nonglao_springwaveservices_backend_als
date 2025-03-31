@@ -94,18 +94,18 @@ class Chat extends Page
 
             $messaging->send($message);
 
-            try {
-                AdminNotification::create([
-                    'user_id' => $receiver->id,
-                    'title' => $messageText,
-                    'content' => $messageText,
-                    'image' => null,
-                    'fcm_token' => $receiver->fcm_token,
-                    'status' => 'sent',
-                ]);
-            } catch (\Throwable $dbError) {
-                Log::error('DB Error (AdminNotification): ' . $dbError->getMessage());
-            }
+            // try {
+            //     AdminNotification::create([
+            //         'user_id' => $receiver->id,
+            //         'title' => $messageText,
+            //         'content' => $messageText,
+            //         'image' => null,
+            //         'fcm_token' => $receiver->fcm_token,
+            //         'status' => 'sent',
+            //     ]);
+            // } catch (\Throwable $dbError) {
+            //     Log::error('DB Error (AdminNotification): ' . $dbError->getMessage());
+            // }
 
             \Filament\Notifications\Notification::make()
                 ->title("Notification sent to {$receiver->name}")
