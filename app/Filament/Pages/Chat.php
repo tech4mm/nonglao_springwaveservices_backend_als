@@ -7,6 +7,12 @@ use Livewire\Component;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
+use Kreait\Firebase\Messaging; // Ensure this is the correct namespace for Messaging
+use Kreait\Firebase\Messaging\CloudMessage; // Import CloudMessage from Firebase SDK
+use Kreait\Firebase\Messaging\Notification; // Import Notification from Firebase SDK
+use App\Models\AdminNotification; // Import AdminNotification model
+use Illuminate\Support\Facades\Log; // Import Log facade
 
 class Chat extends Page
 {
@@ -63,5 +69,49 @@ class Chat extends Page
 
         $this->newMessage = '';
         $this->loadMessages();
+
+
+        // Optionally, you can also send a notification to the receiver
+        try {
+                            /** @var Messaging $messaging */
+                            $messaging = App::make(Messaging::class);
+
+                            $receiver = User::find($this->receiverId);
+                            if (!$receiver || !$receiver->fcm_token) {
+                                throw new \Exception('Receiver or FCM token not found.');
+                            }
+                            $message = CloudMessage::withTarget('token', $receiver->fcm_token)
+                                ->withNotification(Notification::create('chat', $this->newMessage))
+                                ->withData([
+                                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                                    'image' => $data['image'] ?? '',
+                                ]);
+
+                            $messaging->send($message);
+                            try {
+                                AdminNotification::create([
+                                    'user_id' => $receiver->id,
+                                    'title' => $this->newMessage,
+                                    'content' => $this->newMessage,
+                                    'image' => null,
+                                    'fcm_token' => $receiver->fcm_token,
+                                    'status' => 'sent',
+                                ]);
+                            } catch (\Throwable $dbError) {
+                                Log::error('DB Error (AdminNotification): ' . $dbError->getMessage());
+                            }
+
+                            \Filament\Notifications\Notification::make()
+                                ->title("Notification sent to {$receiver->name}")
+                                ->success()
+                                ->send();
+                        } catch (\Throwable $e) {
+                            Log::error('FCM Error: ' . $e->getMessage());
+
+                            \Filament\Notifications\Notification::make()
+                                ->title("Failed to send notification.")
+                                ->danger()
+                                ->send();
+                        }
     }
 }
