@@ -29,8 +29,6 @@ class AdminNotificationController extends Controller
         $projectId = json_decode(file_get_contents(storage_path('app/firebase/firebase_credentials.json')), true)['project_id'];
         $fcmUrl = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
 
-        //$fcmUrl = "https://fcm.googleapis.com/v1/projects/spring-wave-a2661/messages:send";
-
         $fcmMessage = [
             'message' => [
                 'token' => $request->fcm_token,
