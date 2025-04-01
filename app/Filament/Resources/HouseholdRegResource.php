@@ -16,6 +16,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class HouseholdRegResource extends Resource
 {
     protected static ?string $model = HouseholdReg::class;
+    public static function shouldRegisterNavigation(): bool
+{
+    return false;
+}
 
    public static function getNavigationLabel(): string
     {
