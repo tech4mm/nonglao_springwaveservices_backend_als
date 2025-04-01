@@ -94,7 +94,7 @@ class UserResource extends Resource
                 ->default('pending'),
 
             Forms\Components\DatePicker::make('date_of_birth')->label('Date of Birth')->nullable(),
-            TextInput::make('registration_number')->label('Registration Number')->nullable(),
+            TextInput::make('registration_number')->label('NRC Number')->nullable(),
             TextInput::make('uid_number')->label('UID Number')->nullable(),
             TextInput::make('taxpayer_number')->label('Taxpayer Number')->nullable(),
             TextInput::make('owic_number')->label('OWIC Number')->nullable(),
