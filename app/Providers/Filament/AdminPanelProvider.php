@@ -39,10 +39,9 @@ class AdminPanelProvider extends PanelProvider
 
            ->navigationGroups([
                 NavigationGroup::make('Admin Panel'),
-                NavigationGroup::make('Requirements'),
                 NavigationGroup::make('Info Panel'),
+                NavigationGroup::make('Requirements'),
                 NavigationGroup::make('Recommendation Letter'),
-                NavigationGroup::make('Others'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
