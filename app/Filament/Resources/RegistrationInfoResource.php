@@ -16,6 +16,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class RegistrationInfoResource extends Resource
 {
     protected static ?string $model = RegistrationInfo::class;
+    public static function shouldRegisterNavigation(): bool
+{
+    return false;
+}
 
     public static function getNavigationLabel(): string
     {
