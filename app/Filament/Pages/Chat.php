@@ -59,7 +59,7 @@ class Chat extends Page
     {
         $this->authUserId = auth()->id();
         $this->users = User::where('id', '!=', $this->authUserId)->get();
-        $this->receiverId = $this->users->first()?->id;
+        //$this->receiverId = $this->users->first()?->id;
         $this->loadMessages();
     }
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\FCMController;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +31,16 @@ Route::get('/download-apk', function () {
         'Content-Disposition' => 'attachment; filename="app-release.apk"',
     ]);
 })->name('download.apk');
+
+
+Route::get('/download-file', function (Request $request) { // ← This is the Illuminate\Http\Request instance
+    $url = $request->query('url'); // Now works correctly
+    $filename = basename($url);
+    
+    return response()->streamDownload(function () use ($url) {
+        echo file_get_contents($url);
+    }, $filename);
+})->name('download.file');
 
 // Route::middleware(['web', 'auth']) // Admin login required
 //     ->get('/send-notification/{user}', [NotificationController::class, 'send'])
