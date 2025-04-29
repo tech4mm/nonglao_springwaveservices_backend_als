@@ -72,15 +72,14 @@ class PassportDetailResource extends Resource
                             $set('gender', $gender);
                         }
 
-                        // // Date of Issue from worker_infos table
-                        // $user = \App\Models\User::with('workerInfo')->find($state);
-                        // if ($user && $user->workerInfo && $user->workerInfo->date_of_issue) {
-                        //     $set('date_of_issue', $user->workerInfo->date_of_issue);
-                        // }
+                        // Date of Issue from worker_infos table
+                        if ($user && $user->workerInfo && $user->workerInfo->date_of_issue) {
+                            $set('date_of_issue', $user->workerInfo->date_of_issue);
+                        }
 
-                        // // if ($user && $user->passport_number) {
-                        // //     $set('passport_number', $user->passport_number);
-                        // // }
+                        if ($user && $user->workerInfo->place_of_issue) {
+                            $set('place_of_issue', $user->workerInfo->place_of_issue);
+                        }
                     }),
                     
 
