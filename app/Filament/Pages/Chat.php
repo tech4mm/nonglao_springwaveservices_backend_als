@@ -143,4 +143,11 @@ class Chat extends Page
 
         $this->newMessage = '';
     }
+
+    // protected function getLayoutData(): array
+    // {
+    //     return [
+    //         'darkMode' => filament()->hasDarkModeEnabled(),
+    //     ];
+    // }
 }
