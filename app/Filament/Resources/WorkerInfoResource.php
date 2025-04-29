@@ -48,7 +48,6 @@ class WorkerInfoResource extends Resource
                     ->searchable()
                     ->preload()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->id} - {$record->phone} - {$record->name}")
-                    ->searchable()
                     ->required()
                     ->reactive()
                     ->afterStateUpdated(function ($state, callable $set) {

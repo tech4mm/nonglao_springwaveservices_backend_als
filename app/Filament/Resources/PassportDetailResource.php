@@ -54,7 +54,35 @@ class PassportDetailResource extends Resource
                     ->preload()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->id} - {$record->phone} - {$record->name}")
                     ->searchable()
-                    ->required(),
+                    ->required()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $user = \App\Models\User::find($state);
+                        if ($user && $user->name) {
+                            $set('name', $user->name);
+                        }
+                        if ($user && $user->date_of_birth) {
+                            $set('date_of_birth', $user->date_of_birth);
+                        }
+                        if ($user && $user->passport_number) {
+                            $set('passport_number', $user->passport_number);
+                        }
+                        $gender = strtolower(trim($user->gender));
+                        if (in_array($gender, ['male', 'female', 'other'])) {
+                            $set('gender', $gender);
+                        }
+
+                        // // Date of Issue from worker_infos table
+                        // $user = \App\Models\User::with('workerInfo')->find($state);
+                        // if ($user && $user->workerInfo && $user->workerInfo->date_of_issue) {
+                        //     $set('date_of_issue', $user->workerInfo->date_of_issue);
+                        // }
+
+                        // // if ($user && $user->passport_number) {
+                        // //     $set('passport_number', $user->passport_number);
+                        // // }
+                    }),
+                    
 
             Forms\Components\FileUpload::make('photo')
                 ->disk('public')
@@ -80,9 +108,9 @@ class PassportDetailResource extends Resource
             Forms\Components\Select::make('gender')
                 ->label('Gender')
                 ->options([
-                    'Male' => 'Male',
-                    'Female' => 'Female',
-                    'Other' => 'Other',
+                    'male' => 'Male',
+                    'female' => 'Female',
+                    'other' => 'Other',
                 ])
                 ->native(false)
                 ->required(),
@@ -96,6 +124,7 @@ class PassportDetailResource extends Resource
 
             Forms\Components\DatePicker::make('date_of_issue')
                 ->required(),
+                
             Forms\Components\DatePicker::make('passport_expire_date')
                 ->label('Passport Expiry Date')
                 ->required(),
@@ -148,8 +177,7 @@ class PassportDetailResource extends Resource
 
             Tables\Columns\TextColumn::make('date_of_issue')
                 ->label('Date of Issue')
-                ->sortable()
-                ->date(),
+                ->sortable(),
 
             Tables\Columns\TextColumn::make('place_of_issue')
                 ->label('Place of Issue')

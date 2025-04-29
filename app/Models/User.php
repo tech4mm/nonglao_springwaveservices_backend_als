@@ -81,7 +81,6 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasOne(WorkerInfo::class);
     }
-
     public function passportDetail()
 {
     return $this->hasOne(PassportDetail::class);
