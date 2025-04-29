@@ -38,7 +38,6 @@ class Chat extends Page
                 $this->file = null;
             }
         }
-    //protected static ?string $navigationIcon = 'heroicon-o-chat-alt-2';
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
     protected static string $view = 'filament.pages.chat';
      public static function getNavigationSort(): ?int
@@ -53,11 +52,10 @@ class Chat extends Page
     public Collection $messages;
     public string $search = '';
 
+
     public function mount(): void
     {
         $this->authUserId = auth()->id();
-        $this->users = User::where('id', '!=', $this->authUserId)->get();
-        //$this->receiverId = $this->users->first()?->id;
         $this->loadUsers();
         $this->loadMessages();
     }
@@ -78,6 +76,18 @@ class Chat extends Page
                 $q->where('sender_id', $this->receiverId)
                     ->where('receiver_id', $this->authUserId);
             })->orderBy('created_at')->get();
+
+            // Mark messages as seen
+            Message::where('receiver_id', $this->authUserId)
+                ->where('sender_id', $this->receiverId)
+                ->where('is_seen', false)
+                ->update(['is_seen' => true]);
+
+            $this->loadUsers(); // ✅ Reload users to refresh counts
+
+            // Dispatch an event to scroll and reset UI unread count
+            $this->dispatch('chat-messages-loaded');
+            $this->dispatch('scroll-to-bottom');
         }
     }
 
@@ -117,19 +127,6 @@ class Chat extends Page
 
             $messaging->send($message);
 
-            // try {
-            //     AdminNotification::create([
-            //         'user_id' => $receiver->id,
-            //         'title' => $messageText,
-            //         'content' => $messageText,
-            //         'image' => null,
-            //         'fcm_token' => $receiver->fcm_token,
-            //         'status' => 'sent',
-            //     ]);
-            // } catch (\Throwable $dbError) {
-            //     Log::error('DB Error (AdminNotification): ' . $dbError->getMessage());
-            // }
-
             \Filament\Notifications\Notification::make()
                 ->title("Notification sent to {$receiver->name}")
                 ->success()
@@ -146,31 +143,53 @@ class Chat extends Page
         $this->newMessage = '';
     }
 
-    public function loadUsers(): void
-    {
-        $this->users = User::query()
-            ->where('id', '!=', $this->authUserId)
-            ->when($this->search, fn ($query) =>
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%')
-            )
-            ->get();
-    }
+public function loadUsers(): void
+{
+    $this->users = User::query()
+        ->where('id', '!=', $this->authUserId) // ✅ Make sure Admin itself is excluded
+        ->when($this->search, fn ($query) =>
+            $query->where(function($q) {
+                $q->where('name', 'like', '%' . $this->search . '%')
+                  ->orWhere('email', 'like', '%' . $this->search . '%');
+            })
+        )
+        ->withCount([
+            'sentMessages as unread_count' => function ($query) {
+                $query->where('receiver_id', $this->authUserId)
+                      ->where('is_seen', false);
+            }
+        ])
+        ->get();
+}
 
     public function updatedSearch()
         {
             $this->loadUsers();
         }
-    
-    public function getFilteredUsersProperty()
-    {
-        return User::query()
-            ->where('id', '!=', $this->authUserId)
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%')
-                    ->orWhere('phone', 'like', '%' . $this->search . '%');
-            })
-            ->get();
-    }
+
+public function getFilteredUsersProperty()
+{
+    return User::select('users.*')
+        ->where('id', '!=', $this->authUserId) // ✅ Filter here too
+        ->selectRaw('(SELECT COUNT(*) FROM messages WHERE messages.receiver_id = users.id AND messages.is_seen = 0) as unread_count')
+        ->when($this->search, function ($query) {
+            $query->where(function($q) {
+                $q->where('name', 'like', '%' . $this->search . '%')
+                  ->orWhere('email', 'like', '%' . $this->search . '%')
+                  ->orWhere('phone', 'like', '%' . $this->search . '%');
+            });
+        })
+        ->get();
+}
+
+
+    // Chat.php (Livewire Component)
+
+public function getUsersProperty()
+{
+    return User::select('users.*')
+        ->where('id', '!=', $this->authUserId) // ✅ Always exclude current user
+        ->selectRaw('(SELECT COUNT(*) FROM messages WHERE messages.receiver_id = users.id AND messages.is_read = 0) as unread_count')
+        ->get();
+}
 }

@@ -34,7 +34,7 @@
                                     <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->email }}</span>
                                     <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->phone }}</span>
                                 </div>
-                                <span class="ml-auto text-xs bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-full px-2 py-0.5">
+                                <span class="ml-auto text-xs {{ $user->unread_count > 0 ? 'bg-red-600 text-white' : 'text-gray-500 dark:text-gray-400' }} rounded-full px-2 py-0.5">
                                     {{ $user->unread_count ?? 0 }}
                                 </span>
                             </div>
@@ -82,10 +82,10 @@
                                         @endif
                                         <div class="flex flex-col">
                                             <span class="text-black dark:text-white">{{ $user->name }}</span>
-                                            <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->email }}</span>
+                                            <!-- <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->email }}</span> -->
                                             <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->phone }}</span>
                                         </div>
-                                        <span class="ml-auto text-xs bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-full px-2 py-0.5">
+                                        <span class="ml-auto text-xs {{ $user->unread_count > 0 ? 'bg-red-600 text-white' : 'text-gray-500 dark:text-gray-400' }} rounded-full px-2 py-0.5">
                                             {{ $user->unread_count ?? 0 }}
                                         </span>
                                     </div>

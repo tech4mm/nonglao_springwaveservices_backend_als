@@ -121,4 +121,14 @@ public function ninetyDay()
     return $this->hasOne(\App\Models\NinetyDayInfo::class);
 }
 
+    public function messages()
+{
+    return $this->hasMany(Message::class, 'sender_id');
+}
+
+public function sentMessages()
+{
+    return $this->hasMany(\App\Models\Message::class, 'sender_id');
+}
+
 }
