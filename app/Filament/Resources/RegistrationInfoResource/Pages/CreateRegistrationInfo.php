@@ -9,4 +9,14 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateRegistrationInfo extends CreateRecord
 {
     protected static string $resource = RegistrationInfoResource::class;
+    protected function getCreatedNotification(): ?\Filament\Notifications\Notification
+    {
+        return \Filament\Notifications\Notification::make()
+            ->title('Created successfully')
+            ->success();
+    }
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
