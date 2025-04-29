@@ -10,18 +10,6 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::get('/download-apk', function () {
-//     $filePath = public_path('apk/app-release.apk'); // make sure the path is correct
-//     return response()->download($filePath, 'app-release.apk');
-// })->name('download.apk');
-
-// Route::get('/download-apk', function () {
-//     $filePath = public_path('apk/app-release.apk');
-
-//     return response()->download($filePath, 'app-release.apk', [
-//         'Content-Type' => 'application/vnd.android.package-archive'
-//     ]);
-// })->name('download.apk');
 
 Route::get('/download-apk', function () {
     $filePath = public_path('apk/app-release.apk');
@@ -41,15 +29,3 @@ Route::get('/download-file', function (Request $request) { // ← This is the Il
         echo file_get_contents($url);
     }, $filename);
 })->name('download.file');
-
-// Route::middleware(['web', 'auth']) // Admin login required
-//     ->get('/send-notification/{user}', [NotificationController::class, 'send'])
-//     ->name('fcm.send');
-
-// Route::post('/send-notification', [AdminNotificationController::class, 'send'])
-//     ->name('fcm.send.from.admin'); // ✅ No {user} required
-
-
-// Route::post('/fcm/send-from-admin/{user}', [AdminNotificationController::class, 'send'])
-//     ->name('fcm.send.from.admin')
-//     ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
