@@ -53,8 +53,23 @@ class WorkPermitDetailResource extends Resource
                     ->searchable()
                     ->preload()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->id} - {$record->phone} - {$record->name}")
-                    ->searchable()
-                    ->required(),
+                    ->reactive()
+                    ->required()
+                     ->afterStateUpdated(function ($state, callable $set) {
+                        $user = \App\Models\User::find($state);
+                        if ($user && $user->name) {
+                            $set('name', $user->name);
+                        }
+                        
+                        if ($user && $user->passport_number) {
+                            $set('passport_number', $user->passport_number);
+                        }
+                        $gender = strtolower(trim($user->gender));
+                        if (in_array($gender, ['male', 'female', 'other'])) {
+                            $set('gender', $gender);
+                        }
+                    }),
+                    
 
                 Forms\Components\FileUpload::make('photo')
                     ->disk('public')
