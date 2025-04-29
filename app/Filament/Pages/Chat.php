@@ -24,9 +24,6 @@ class Chat extends Page
      public $file;
         public function uploadFile(){
             if ($this->file) {
-                // $this->validate([
-                //     'file' => 'file|max:10240', // max 10MB
-                // ]);
 
                 $path = $this->file->store('chat_uploads', 'public');
                 $url = Storage::disk('public')->url($path);

@@ -47,13 +47,13 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 // we hide dashboard tab in admin panel
-                // Pages\Dashboard::class,
+                Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 // ChatWidget::class,
                 // widgets in admin dashboard
-                //Widgets\AccountWidget::class,
+                Widgets\AccountWidget::class,
                 //Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
