@@ -49,7 +49,21 @@ class WorkerInfoResource extends Resource
                     ->preload()
                     ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->id} - {$record->phone} - {$record->name}")
                     ->searchable()
-                    ->required(),
+                    ->required()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $user = \App\Models\User::find($state);
+                        if ($user && $user->passport_number) {
+                            $set('passport_no', $user->passport_number);
+                        }
+                        if ($user && $user->date_of_birth) {
+                            $set('date_of_birth', $user->date_of_birth);
+                        }
+                        $gender = strtolower(trim($user->gender));
+                        if (in_array($gender, ['male', 'female', 'other'])) {
+                            $set('gender', $gender);
+                        }
+                    }),
                 Forms\Components\TextInput::make('passport_no')->required(),
                 Forms\Components\DatePicker::make('date_of_issue')->required(),
                 Forms\Components\TextInput::make('place_of_issue')->required(),
