@@ -20,7 +20,7 @@
                     <div class="overflow-y-auto h-[calc(100vh-200px)]">
                         @foreach ($this->users as $user)
                             <div wire:click="$set('receiverId', {{ $user->id }})"
-                                class="cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-3 {{ $receiverId === $user->id ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : '' }}">
+                                class="cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3 {{ $receiverId === $user->id ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : '' }}">
                                 @if ($user->user_picture)
                                     <img src="{{ asset('storage/' . $user->user_picture) }}" 
                                         alt="User" class="w-10 h-10 rounded-full object-cover" />
@@ -30,7 +30,7 @@
                                     </div>
                                 @endif
                                 <div class="flex flex-col">
-                                    <span class="text-black dark:text-white">{{ $user->name }}</span>
+                                    <span class="text-black dark:text-black">{{ $user->name }}</span>
                                     <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->email }}</span>
                                     <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->phone }}</span>
                                 </div>
@@ -70,7 +70,7 @@
                                 
                                  @foreach ($this->filteredUsers as $user)
                                     <div wire:click="$set('receiverId', {{ $user->id }})"
-                                        class="cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-3 {{ $receiverId === $user->id ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : '' }}">
+                                        class="cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3 {{ $receiverId === $user->id ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : '' }}">
                                         @if ($user->user_picture)
                                             <img src="{{ asset('storage/' . $user->user_picture) }}" 
                                                 alt="User" 
@@ -81,11 +81,11 @@
                                             </div>
                                         @endif
                                         <div class="flex flex-col">
-                                            <span class="text-black dark:text-white">{{ $user->name }}</span>
+                                            <span class="text-black dark:text-black">{{ $user->name }}</span>
                                             <!-- <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->email }}</span> -->
                                             <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->phone }}</span>
                                         </div>
-                                        <span class="ml-auto text-xs {{ $user->unread_count > 0 ? 'bg-red-600 text-white' : 'text-gray-500 dark:text-gray-400' }} rounded-full px-2 py-0.5">
+                                        <span class="ml-auto text-xs {{ $user->unread_count > 0 ? 'bg-red-600 text-black' : 'text-gray-500 dark:text-gray-400' }} rounded-full px-2 py-0.5">
                                             {{ $user->unread_count ?? 0 }}
                                         </span>
                                     </div>
@@ -258,31 +258,33 @@
         <!-- Message Input -->
         <div class="sticky bottom-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-4">
             <div class="flex items-center h-16 rounded-xl bg-white dark:bg-gray-900 w-full px-4">
-                <label class="cursor-pointer bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300">
-                    📎
-                    <input type="file" class="hidden" wire:model="file" wire:change="uploadFile">
-                </label>
-                <div class="flex-grow ml-4">
-                    <div class="relative w-full">
-                        <input type="text" 
-                            wire:model.defer="newMessage"
-                            wire:keydown.enter="sendMessage"
-                            placeholder="Type your message..."
-                            class="flex w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-black dark:text-white bg-white dark:bg-gray-900 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-500 dark:focus:ring-blue-500 focus:border-blue-300">
+                <div class="flex items-center gap-3 w-full">
+                    <label class="cursor-pointer bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-sm text-gray-700 dark:text-gray-300">
+                        📎
+                        <input type="file" class="hidden" wire:model="file" wire:change="uploadFile">
+                    </label>
+                    <div class="flex-grow">
+                        <div class="relative w-full">
+                            <input type="text" 
+                                wire:model.defer="newMessage"
+                                wire:keydown.enter="sendMessage"
+                                placeholder="Type your message..."
+                                class="flex w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full text-black dark:text-white bg-white dark:bg-gray-900 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-500 dark:focus:ring-blue-500 focus:border-blue-300">
+                        </div>
                     </div>
-                </div>
-                <div class="ml-4">
-                    <button wire:click="sendMessage"
-                        class="bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition duration-150"
-                        title="Send">
-                        <!-- <svg class="w-5 h-5 transform rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" 
-                            stroke-linejoin="round" 
-                            stroke-width="2" 
-                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg> -->
-                        ==>
-                    </button>
+                    <div>
+                        <button wire:click="sendMessage"
+                            class="bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition duration-150"
+                            title="Send">
+                            <!-- <svg class="w-5 h-5 transform rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" 
+                                stroke-linejoin="round" 
+                                stroke-width="2" 
+                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                            </svg> -->
+                            ==>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
