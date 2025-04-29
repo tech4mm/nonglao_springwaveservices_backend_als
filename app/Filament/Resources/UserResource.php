@@ -71,9 +71,11 @@ class UserResource extends Resource
                 ->label('Email'),
 
             TextInput::make('password')
-                ->password() // Use password method here
+                ->password()
                 ->label('Password')
-                ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
+                ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
+                ->dehydrated(fn ($state) => filled($state))
+                ->nullable(),
 
             TextInput::make('passport_number')->label('Passport Number')->nullable(),
             Forms\Components\Select::make('gender')
