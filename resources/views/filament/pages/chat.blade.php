@@ -67,7 +67,8 @@
                                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm text-black dark:text-white bg-white dark:bg-gray-900 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-500 dark:focus:ring-blue-500 focus:border-blue-300" />
                             </div>
                             <div class="overflow-x-auto">
-                                @foreach ($this->users as $user)
+                                
+                                 @foreach ($this->filteredUsers as $user)
                                     <div wire:click="$set('receiverId', {{ $user->id }})"
                                         class="cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-3 {{ $receiverId === $user->id ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : '' }}">
                                         @if ($user->user_picture)

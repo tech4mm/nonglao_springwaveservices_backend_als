@@ -15,6 +15,8 @@ php artisan migrate
 </x-filament-widgets::widget>
 
 
+<!-- @foreach ($this->users as $user) -->
+
 ----
 //ChatWidget.php -->app/Filament/Widgets/ChatWidget.php
 <?php

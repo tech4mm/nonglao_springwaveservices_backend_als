@@ -51,12 +51,14 @@ class Chat extends Page
     public int $authUserId;
     public Collection $users;
     public Collection $messages;
+    public string $search = '';
 
     public function mount(): void
     {
         $this->authUserId = auth()->id();
         $this->users = User::where('id', '!=', $this->authUserId)->get();
         //$this->receiverId = $this->users->first()?->id;
+        $this->loadUsers();
         $this->loadMessages();
     }
 
@@ -144,10 +146,31 @@ class Chat extends Page
         $this->newMessage = '';
     }
 
-    // protected function getLayoutData(): array
-    // {
-    //     return [
-    //         'darkMode' => filament()->hasDarkModeEnabled(),
-    //     ];
-    // }
+    public function loadUsers(): void
+    {
+        $this->users = User::query()
+            ->where('id', '!=', $this->authUserId)
+            ->when($this->search, fn ($query) =>
+                $query->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%')
+            )
+            ->get();
+    }
+
+    public function updatedSearch()
+        {
+            $this->loadUsers();
+        }
+    
+    public function getFilteredUsersProperty()
+    {
+        return User::query()
+            ->where('id', '!=', $this->authUserId)
+            ->when($this->search, function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%')
+                    ->orWhere('phone', 'like', '%' . $this->search . '%');
+            })
+            ->get();
+    }
 }
