@@ -67,6 +67,7 @@ class Chat extends Page
 
     public function loadMessages(): void
     {
+       
         $this->messages = collect();
         if ($this->receiverId) {
             $this->messages = Message::where(function ($q) {
@@ -76,7 +77,6 @@ class Chat extends Page
                 $q->where('sender_id', $this->receiverId)
                     ->where('receiver_id', $this->authUserId);
             })->orderBy('created_at')->get();
-
             // Mark messages as seen
             Message::where('receiver_id', $this->authUserId)
                 ->where('sender_id', $this->receiverId)
@@ -89,6 +89,7 @@ class Chat extends Page
             $this->dispatch('chat-messages-loaded');
             $this->dispatch('scroll-to-bottom');
         }
+       
     }
 
     public function sendMessage(): void
@@ -145,6 +146,7 @@ class Chat extends Page
 
 public function loadUsers(): void
 {
+
     $this->users = User::query()
         ->where('id', '!=', $this->authUserId) // ✅ Make sure Admin itself is excluded
         ->when($this->search, fn ($query) =>
@@ -169,17 +171,37 @@ public function loadUsers(): void
 
 public function getFilteredUsersProperty()
 {
-    return User::select('users.*')
-        ->where('id', '!=', $this->authUserId) // ✅ Filter here too
-        ->selectRaw('(SELECT COUNT(*) FROM messages WHERE messages.receiver_id = users.id AND messages.is_seen = 0) as unread_count')
-        ->when($this->search, function ($query) {
-            $query->where(function($q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('email', 'like', '%' . $this->search . '%')
-                  ->orWhere('phone', 'like', '%' . $this->search . '%');
-            });
+   
+    return User::query()
+    ->where('id', '!=', $this->authUserId)
+    ->when($this->search, fn ($query) =>
+        $query->where(function($q) {
+            $q->where('name', 'like', '%' . $this->search . '%')
+              ->orWhere('email', 'like', '%' . $this->search . '%')
+              ->orWhere('phone', 'like', '%' . $this->search . '%');
         })
-        ->get();
+    )
+    ->withCount([
+        'sentMessages as unread_count' => function ($query) {
+            $query->where('receiver_id', $this->authUserId)
+                  ->where('is_seen', 0);
+        }
+    ])
+    ->with(['sentMessages' => function($query) {
+        $query->where('receiver_id', $this->authUserId)
+              ->latest()
+              ->limit(1);
+    }])
+    ->orderByDesc('unread_count')
+    ->orderByDesc(function($query) {
+        $query->select('created_at')
+              ->from('messages')
+              ->whereColumn('sender_id', 'users.id')
+              ->where('receiver_id', $this->authUserId)
+              ->latest()
+              ->limit(1);
+    })
+    ->get();
 }
 
 

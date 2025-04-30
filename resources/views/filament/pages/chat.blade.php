@@ -14,12 +14,19 @@
                     </button>
                 </div>
                 <div class="p-4 overflow-y-auto">
-                    <input type="text" wire:model.debounce.300ms="search"
-                        placeholder="Search users..."
-                        class="w-full px-3 py-2 mb-4 border border-gray-300 dark:border-gray-600 rounded-md text-sm text-black dark:text-white bg-white dark:bg-gray-900 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-500 dark:focus:ring-blue-500 focus:border-blue-300" />
+                    <input type="text" 
+                            wire:model.debounce.300ms="search"
+                            placeholder="Search users..."
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm text-black dark:text-white bg-white dark:bg-gray-900 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-500 dark:focus:ring-blue-500 focus:border-blue-300" />
                     <div class="overflow-y-auto h-[calc(100vh-200px)]">
-                        @foreach ($this->users as $user)
+                        @foreach ($this->filteredUsers as $user)
                             <div wire:click="$set('receiverId', {{ $user->id }})"
+                                x-on:click="$nextTick(() => {
+                                    const container = document.getElementById('chatMessages');
+                                    if (container) {
+                                        container.scrollTop = container.scrollHeight;
+                                    }
+                                })"
                                 class="cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3 {{ $receiverId === $user->id ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : '' }}">
                                 @if ($user->user_picture)
                                     <img src="{{ asset('storage/' . $user->user_picture) }}" 
@@ -31,12 +38,13 @@
                                 @endif
                                 <div class="flex flex-col">
                                     <span class="text-black dark:text-black">{{ $user->name }}</span>
-                                    <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->email }}</span>
                                     <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->phone }}</span>
                                 </div>
+                                @if($user->unread_count)
                                 <span class="ml-auto text-xs {{ $user->unread_count > 0 ? 'bg-red-600 text-white' : 'text-gray-500 dark:text-gray-400' }} rounded-full px-2 py-0.5">
                                     {{ $user->unread_count ?? 0 }}
                                 </span>
+                                @endif
                             </div>
                         @endforeach
                     </div>
@@ -67,10 +75,15 @@
                                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm text-black dark:text-white bg-white dark:bg-gray-900 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring focus:ring-blue-500 dark:focus:ring-blue-500 focus:border-blue-300" />
                             </div>
                             <div class="overflow-x-auto">
-                                
                                  @foreach ($this->filteredUsers as $user)
                                     <div wire:click="$set('receiverId', {{ $user->id }})"
-                                        class="cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3 {{ $receiverId === $user->id ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : '' }}">
+                                            x-on:click="$nextTick(() => {
+                                                const container = document.getElementById('chatMessages');
+                                                if (container) {
+                                                    container.scrollTop = container.scrollHeight;
+                                                }
+                                            })"
+                                                class="cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-3 {{ $receiverId === $user->id ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : '' }}">
                                         @if ($user->user_picture)
                                             <img src="{{ asset('storage/' . $user->user_picture) }}" 
                                                 alt="User" 
@@ -85,9 +98,11 @@
                                             <!-- <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->email }}</span> -->
                                             <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->phone }}</span>
                                         </div>
+                                        @if($user->unread_count)
                                         <span class="ml-auto text-xs {{ $user->unread_count > 0 ? 'bg-red-600 text-black' : 'text-gray-500 dark:text-gray-400' }} rounded-full px-2 py-0.5">
                                             {{ $user->unread_count ?? 0 }}
                                         </span>
+                                        @endif
                                     </div>
                                 @endforeach
                             </div>
@@ -96,9 +111,9 @@
                 </div>
 
                 <!-- Chat Section -->
-                <div class="flex-1 bg-gray-100 dark:bg-gray-800 p-6 overflow-y-auto h-[10vh] border border-gray-300 dark:border-gray-600 border-r">
+                <div id="chatMessages" class="scroll-smooth flex-1 bg-gray-100 dark:bg-gray-800 p-6 overflow-y-auto h-[10vh] border border-gray-300 dark:border-gray-600 border-r">
                     <!-- Messages Container -->
-                    <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-lg ">
+                    <div  class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-lg ">
                         <div class="flex flex-col">
                             <div class="grid grid-cols-12 gap-y-2" wire:poll.1s>
                                 <!-- Example Messages -->
@@ -246,6 +261,12 @@
                                 </div>
                                 @endif
                                 @endforeach
+                                @else
+                                <div class="flex items-center justify-center h-screen">
+                                <div class="text-lg">
+                                    Please select one of the customers.
+                                </div>
+                                </div>
                                 @endif
                                 <!-- Add more messages here -->
                             </div>
