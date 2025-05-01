@@ -214,4 +214,9 @@ public function getUsersProperty()
         ->selectRaw('(SELECT COUNT(*) FROM messages WHERE messages.receiver_id = users.id AND messages.is_read = 0) as unread_count')
         ->get();
 }
+
+public function getTitle(): string
+{
+    return ''; // This removes the title from the UI
+}
 }
