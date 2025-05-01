@@ -154,9 +154,9 @@
                                             @if ($fileLink)
                                                 <div class="flex items-center gap-2">
                                                 @if (Str::endsWith($fileLink, ['.jpg', '.jpeg', '.png', '.gif']))
-                                                    
+                                                    <a href="{{ $fileLink }}" target="_blank" rel="noopener noreferrer">
                                                         <img src="{{ $fileLink }}" class="w-32 h-32 rounded-lg object-cover" />
-                                                        
+                                                    </a>
                                                 @else
                                                     <iframe src="{{ $fileLink }}" class="w-32 h-32 rounded-lg" frameborder="0"></iframe>
                                                 @endif
@@ -171,8 +171,9 @@
                                                 </div>
                                             @elseif (Str::contains($message->message, ['.jpg', '.jpeg', '.png', '.gif']))
                                                 <div class="flex items-center gap-2">
-                                                    <img src="{{ $message->message }}" class="w-32 h-32 rounded-lg object-cover" />
-                                                    
+                                                    <a href="{{ $message->message }}" target="_blank" rel="noopener noreferrer">
+                                                        <img src="{{ $message->message }}" class="w-32 h-32 rounded-lg object-cover" />
+                                                    </a>
                                                     <a href="{{ route('download.file', ['url' => $message->message]) }}" 
                                                     class="flex items-center justify-center p-2 bg-gray-100 dark:bg-gray-800 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
                                                     title="Download">
@@ -215,9 +216,9 @@
                                             @if ($fileLink)
                                                 <div class="flex items-center gap-2">
                                                 @if (Str::endsWith($fileLink, ['.jpg', '.jpeg', '.png', '.gif']))
-                                                    
+                                                    <a href="{{ $fileLink }}" target="_blank" rel="noopener noreferrer">
                                                         <img src="{{ $fileLink }}" class="w-32 h-32 rounded-lg object-cover" />
-                                                        
+                                                    </a>
                                                 @else
                                                     <iframe src="{{ $fileLink }}" class="w-32 h-32 rounded-lg" frameborder="0"></iframe>
                                                 @endif
@@ -232,8 +233,9 @@
                                                 </div>
                                             @elseif (Str::contains($message->message, ['.jpg', '.jpeg', '.png', '.gif']))
                                             <div class="flex items-center gap-2">
-                                                    <img src="{{ $message->message }}" class="w-32 h-32 rounded-lg object-cover" />
-                                                    
+                                                    <a href="{{ $message->message }}" target="_blank" rel="noopener noreferrer">
+                                                        <img src="{{ $message->message }}" class="w-32 h-32 rounded-lg object-cover" />
+                                                    </a>
                                                     <a href="{{ route('download.file', ['url' => $message->message]) }}" 
                                                     class="flex items-center justify-center p-2 bg-gray-100 dark:bg-gray-800 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
                                                     title="Download">
