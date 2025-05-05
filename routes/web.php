@@ -6,6 +6,11 @@ use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\FCMController;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
+use App\Events\MessageSent;
+use App\Models\Message;
+use Illuminate\Support\Facades\Broadcast;
+
+Broadcast::routes(['middleware' => ['web', 'auth']]);
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,3 +34,14 @@ Route::get('/download-file', function (Request $request) { // ← This is the Il
         echo file_get_contents($url);
     }, $filename);
 })->name('download.file');
+
+Route::get('/send-notification', function () {
+    $message = Message::create([
+        'sender_id' => 18,
+        'receiver_id' => 1,
+        'message' => 'from pusher user dd',
+    ]);
+    //event(new MessageSent($message, auth()->id()));
+    $event = event(new MessageSent($message));
+    return $event;
+});

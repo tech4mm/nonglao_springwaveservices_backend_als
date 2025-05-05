@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="user-id" content="{{ auth()->id() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Download APK</title>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&display=swap" rel="stylesheet">
@@ -176,9 +178,9 @@
             }
         }
     </style>
+    @vite(['resources/js/app.js'])
 </head>
 <body>
-
 <header style="background: linear-gradient(to right, #00a86b, #2ecc71); padding: 30px 40px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
     <div style="display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto;">
         <div>
@@ -237,6 +239,5 @@
         <path d="M0,0V46.29c47.79,22.13,103.2,29,158.2,17C230.77,49.92,284.71,18.6,339,6.86c70.09-15.2,136.25,9.3,206.22,29.77,63.29,18.49,127.6,36.31,190.13,22.52C791.58,48.18,851.81,6,914,0c70.52-6.92,135.63,20.84,200,46.29V0Z" class="wave"></path>
     </svg>
 </div>
-
 </body>
 </html>

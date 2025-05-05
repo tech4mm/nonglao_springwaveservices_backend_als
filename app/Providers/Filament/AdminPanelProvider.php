@@ -19,6 +19,10 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Navigation\NavigationGroup;
+use Filament\Support\Assets\Js;
+use Illuminate\Support\Facades\Vite;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -28,6 +32,10 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('tech4mm')
+            ->assets([
+                Js::make('app', Vite::asset('resources/js/app.js'))
+                    ->module(),
+            ])
             ->login()
                 ->brandLogo(asset('images/logo.png')) // Custom Logo
                 ->brandLogoHeight('60px') // Adjust height
