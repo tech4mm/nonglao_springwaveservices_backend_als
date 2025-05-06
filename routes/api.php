@@ -35,6 +35,8 @@ use App\Models\PassportDeclaration;
 use App\Models\BeingSingle;
 use App\Models\DependencyRelative;
 use App\Models\OtherCertificate;
+use Illuminate\Support\Facades\Broadcast;
+
 
 Route::post("register", [ApiController:: class, "register"]);
 Route::post('otp_register', [ApiController::class, 'otp_register']);
@@ -89,6 +91,8 @@ Route::get('/other-certificates', function () {
 });
 
 Route::group(["middleware" => ["auth:sanctum"]], function(){
+    Broadcast::routes(['middleware' => ['auth:sanctum']]);
+    
     Route::get("profile", [ApiController::class, "profile"]);
     Route::get("logout", [ApiController::class, "logout"]);
     Route::get("worker_info", [WorkerInfoController::class, "getWorkerInfo"]);
