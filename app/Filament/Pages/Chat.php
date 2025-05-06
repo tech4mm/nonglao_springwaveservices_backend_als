@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage; // Import Storage facade
 use Kreait\Firebase\Factory;
 use Livewire\WithFileUploads;
 use Livewire\WithValidation;
+use App\Events\MessageSent;
 
 class Chat extends Page
 {
@@ -98,11 +99,13 @@ class Chat extends Page
 
         $messageText = $this->newMessage;
 
-        Message::create([
+        $messageData = Message::create([
             'sender_id' => $this->authUserId,
             'receiver_id' => $this->receiverId,
             'message' => $messageText,
         ]);
+
+        event(new MessageSent($messageData));
 
         $this->loadMessages();
 
@@ -128,10 +131,10 @@ class Chat extends Page
 
             $messaging->send($message);
 
-            \Filament\Notifications\Notification::make()
-                ->title("Notification sent to {$receiver->name}")
-                ->success()
-                ->send();
+            // \Filament\Notifications\Notification::make()
+            //     ->title("Notification sent to {$receiver->name}")
+            //     ->success()
+            //     ->send();
         } catch (\Throwable $e) {
             Log::error('FCM Error: ' . $e->getMessage());
 
