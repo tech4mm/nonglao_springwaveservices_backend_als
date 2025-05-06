@@ -23,6 +23,9 @@ use Filament\Support\Assets\Js;
 use Illuminate\Support\Facades\Vite;
 use Filament\Support\Facades\FilamentView;
 use Filament\View\PanelsRenderHook;
+use App\Filament\Widgets\ExpiryStats;
+use App\Filament\Widgets\ExpiryRadials;
+use Filament\Widgets\WidgetConfiguration;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -59,10 +62,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                // ChatWidget::class,
-                // widgets in admin dashboard
-                Widgets\AccountWidget::class,
-                //Widgets\FilamentInfoWidget::class,
+                ExpiryStats::class,
+                ExpiryRadials::class,
+
             ])
             ->middleware([
                 EncryptCookies::class,
