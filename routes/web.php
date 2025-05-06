@@ -10,7 +10,9 @@ use App\Events\MessageSent;
 use App\Models\Message;
 use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::routes(['middleware' => ['web', 'auth']]);
+Broadcast::routes(['middleware' => ['auth:api']]); // For API tokens
+// OR if using web sessions:
+Broadcast::routes(['middleware' => ['auth:sanctum']]); // For Sanctum tokens
 
 Route::get('/', function () {
     return view('welcome');
