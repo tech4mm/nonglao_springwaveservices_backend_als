@@ -39,7 +39,7 @@ window.Echo.private(`chat.${userId}`)
             audio.play();
             messageSpan.innerHTML = `
             <div id="message-container" class="mt-1 mr-6 p-4 text-sm rounded-lg shadow-lg transform transition-all duration-300 ease-in-out">
-                <span class="font-medium">${e.message.message}</span>
+                <span class="font-medium">${e.message.sender.name}: ${e.message.message}</span>
             </div>
         `;
 

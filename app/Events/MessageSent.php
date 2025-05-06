@@ -12,7 +12,8 @@ class MessageSent implements ShouldBroadcast
 
     public function __construct($message)
     {
-        $this->message = $message;
+        //$this->message = $message;
+        $this->message = $message->load('sender');
     }
 
     public function broadcastOn()
