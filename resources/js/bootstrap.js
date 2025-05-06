@@ -20,6 +20,15 @@ window.Echo = new Echo({
 
 const userId = document.querySelector('meta[name="user-id"]')?.content;
 
+window.Echo.connector.pusher.connection.bind('connected', () => {
+    console.log('Connected to Pusher');
+});
+
+window.Echo.connector.pusher.connection.bind('error', function (err) {
+    console.error('Pusher connection error:', err);
+});
+
+console.log('Private message received:', userId);
 window.Echo.private(`chat.${userId}`)
     .listen('.message.sent', (e) => {
         console.log('Private message received:', e.message);
