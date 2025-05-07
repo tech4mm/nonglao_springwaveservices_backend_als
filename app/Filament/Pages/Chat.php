@@ -106,7 +106,7 @@ class Chat extends Page
         ]);
 
         // event(new MessageSent($messageData));
-        broadcast(new MessageSent($message))->toOthers();
+        broadcast(new MessageSent($messageData))->toOthers();
 
         $this->loadMessages();
 
