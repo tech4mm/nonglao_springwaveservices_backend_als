@@ -127,4 +127,5 @@ Route::group(["middleware" => ["auth:sanctum"]], function(){
     Route::get('/chat/messages', [ChatController::class, 'getMessages']);
 
     Route::post('/upload-message-file', [MessageFileController::class, 'upload']);
+    Route::post('/test/messages', [ChatController::class, 'testMessage']);
 });
