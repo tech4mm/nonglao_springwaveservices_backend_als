@@ -105,7 +105,8 @@ class Chat extends Page
             'message' => $messageText,
         ]);
 
-        event(new MessageSent($messageData));
+        // event(new MessageSent($messageData));
+        broadcast(new MessageSent($message))->toOthers();
 
         $this->loadMessages();
 

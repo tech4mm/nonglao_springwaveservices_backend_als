@@ -29,4 +29,17 @@ class ChatController extends Controller
             ->orderBy('created_at', 'asc')
             ->get();
     }
+    public function testMessage(Request $request)
+    {
+    
+        $message = Message::create([
+            'sender_id' => $request->sender_id,
+            'receiver_id' => $request->receiver_id,
+            'message' => $request->message,
+        ]);
+
+        broadcast(new MessageSent($message))->toOthers();
+
+        return response()->json($message);
+    }
 }
