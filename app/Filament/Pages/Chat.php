@@ -29,18 +29,19 @@ class Chat extends Page
                 $path = $this->file->store('chat_uploads', 'public');
                 $url = Storage::disk('public')->url($path);
 
-                Message::create([
+                $messageData = Message::create([
                     'sender_id' => $this->authUserId,
                     'receiver_id' => $this->receiverId,
                     'message' => '📎 File: <a href="' . $url . '" target="_blank">View File</a>',
                 ]);
-
+                broadcast(new MessageSent($messageData))->toOthers();
                 $this->loadMessages();
                 $this->file = null;
             }
         }
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
     protected static string $view = 'filament.pages.chat';
+    protected $listeners = ['pusher-message-received' => 'handlePusherMessage'];
      public static function getNavigationSort(): ?int
     {
         return 3; // Sorting order (lower values appear first)
@@ -68,7 +69,7 @@ class Chat extends Page
 
     public function loadMessages(): void
     {
-       
+
         $this->messages = collect();
         if ($this->receiverId) {
             $this->messages = Message::where(function ($q) {
@@ -222,5 +223,11 @@ public function getUsersProperty()
 public function getTitle(): string
 {
     return ''; // This removes the title from the UI
+}
+
+
+public function handlePusherMessage()
+{
+    $this->loadMessages();
 }
 }
