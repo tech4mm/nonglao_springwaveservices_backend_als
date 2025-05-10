@@ -320,5 +320,41 @@
         </div>
     </div>
 </div>
+@script
+<script>
+    // Simple debug message to confirm script loads
+    console.log('Chat script initialized');
+    
+        if (typeof Echo === 'undefined') {
+            console.error('Error: Laravel Echo not loaded. Check your app.js');
+            return;
+        }
+
+        const authUserId = @json(auth()->id());
+        console.log('Subscribing to private channel for user:', authUserId);
+
+        try {
+            const channel = Echo.private(`chat.${authUserId}`);
+            console.log('channel:', channel)
+            channel.listen('.message.sent', (e) => {
+                console.log('Received Pusher event:', e);
+                Livewire.dispatch('pusher-message-received');
+                setTimeout(() => {
+                    const container = document.getElementById('chatMessages');
+                    if (container) {
+                    container.scrollTo({
+                        top: container.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                    }
+                }, 100); // Try 100ms delay, adjust if needed
+            });
+            
+            console.log('Successfully subscribed to Pusher channel');
+        } catch (error) {
+            console.error('Pusher subscription failed:', error);
+        }
+</script>
+@endscript
 </x-filament::page>
 
