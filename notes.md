@@ -81,3 +81,5 @@ class ChatWidget extends Widget
 }
 
 ----
+npm run build <vite error> --> mv public/build/.vite/manifest.json public/build/manifest.json
+----
